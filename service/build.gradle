@@ -1,19 +1,30 @@
 plugins {
+    id 'base'
     id 'java'
+    id 'com.diffplug.spotless' version '6.22.0'
 }
 
 group = 'ru.tusur.lotus'
 version = '1.0-SNAPSHOT'
 
 repositories {
+    gradlePluginPortal()
     mavenCentral()
+    google()
 }
 
 dependencies {
+    implementation group: 'com.diffplug.spotless', name: 'spotless-maven-plugin', version: '2.44.4'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 test {
     useJUnitPlatform()
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+    }
 }
