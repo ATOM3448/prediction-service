@@ -1,4 +1,5 @@
 rootProject.name = 'prediction-service'
 
 include 'service'
+include 'postgresql'
 

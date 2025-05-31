@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.3'
     id 'java'
     id 'com.diffplug.spotless' version '6.22.0'
+    id 'org.flywaydb.flyway'
 }
 
 java {
@@ -21,11 +22,6 @@ dependencies {
     // Spring Data JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.postgresql:postgresql:42.6.0'
-
-    // Flyway для миграции базы данных
-    implementation 'org.flywaydb:flyway-core:9.22.0'
-
-    // Jackson уже включен в spring-boot-starter-web!
 
     // Lombok для сокращения шаблонного кода
     implementation 'org.projectlombok:lombok:1.18.30'
