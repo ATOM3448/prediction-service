@@ -6,11 +6,11 @@
 spring:
   datasource:
     # URL-адрес базы данных PostgreSQL
-    url:
+    url: 'jdbc:postgresql://localhost:5432/prediction_service'
     # Имя пользователя базы данных
-    username:
+    username: 'prediction_service'
     # Пароль пользователя базы данных
-    password:
+    password: 'prediction_service'
     hikari:
       # Максимальное количество подключений к базе данных в пуле
       maximum-pool-size: 10

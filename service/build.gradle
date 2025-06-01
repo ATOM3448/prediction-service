@@ -22,9 +22,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.postgresql:postgresql:42.6.0'
 
-    // Flyway для миграции базы данных
-    implementation 'org.flywaydb:flyway-core:9.22.0'
-
     // Lombok для сокращения шаблонного кода
     implementation 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
