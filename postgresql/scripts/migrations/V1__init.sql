@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS profile
 CREATE SEQUENCE IF NOT EXISTS teacher_id_seq START WITH 1 INCREMENT BY 1;
 CREATE TABLE IF NOT EXISTS teacher
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('teacher_id_seq')
+    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('teacher_id_seq'),
+    organization_teacher_id INTEGER NOT NULL
 );
 
 CREATE SEQUENCE IF NOT EXISTS discipline_id_seq START WITH 1 INCREMENT BY 1;
@@ -69,7 +70,7 @@ CREATE SEQUENCE IF NOT EXISTS student_id_seq START WITH 1 INCREMENT BY 1;
 CREATE TABLE IF NOT EXISTS student
 (
     id INTEGER PRIMARY KEY DEFAULT NEXTVAL('student_id_seq'),
-    organization_student_id
+    organization_student_id INTEGER NOT NULL
 );
 
 CREATE SEQUENCE IF NOT EXISTS result_id_seq START WITH 1 INCREMENT BY 1;
@@ -82,6 +83,3 @@ CREATE TABLE IF NOT EXISTS result
     is_prediction BOOLEAN NOT NULL,
     CONSTRAINT student_indicator_combination UNIQUE (indicator_id, student_id)
 );
-
-ДОБАВИТЬ даты создания/обновления
-ДОБАВИТЬ комменты
