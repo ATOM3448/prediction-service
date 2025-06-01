@@ -21,12 +21,9 @@ repositories {
 }
 
 dependencies {
-    def flywayGradlePluginVersion = '9.22.0'
-    def postgresqlVersion = '42.6.0'
-
     // Flyway для миграции базы данных
-    implementation "org.flywaydb:flyway-core:$flywayGradlePluginVersion"
-    implementation "org.postgresql:postgresql:$postgresqlVersion"
+    implementation 'org.flywaydb:flyway-core:9.22.0'
+    implementation 'org.postgresql:postgresql:42.7.2'
 }
 
 flyway {

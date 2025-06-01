@@ -18,9 +18,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    // Spring Data JPA
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'org.postgresql:postgresql:42.6.0'
+    // JDBI
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.jdbi:jdbi3-core:3.49.4'
+    implementation 'org.jdbi:jdbi3-sqlobject:3.49.4'
+    implementation 'org.jdbi:jdbi3-jackson2:3.49.4'
+    implementation 'org.jdbi:jdbi3-postgres:3.49.4'
+    implementation 'org.jdbi:jdbi3-spring5:3.49.4'
 
     // Lombok для сокращения шаблонного кода
     implementation 'org.projectlombok:lombok:1.18.30'

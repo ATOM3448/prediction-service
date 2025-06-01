@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.program.ProgramDto;
+import ru.tusur.prediction.service.core.program.ProgramService;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ import java.util.List;
 @RestController(ApiPaths.DATA_API_PROGRAM)
 @AllArgsConstructor
 public class ProgramController {
+
+    private final ProgramService programService;
 
     @GetMapping
     public List<ProgramDto> getProgram() {

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.discipline.DisciplineDto;
+import ru.tusur.prediction.service.core.discipline.DisciplineService;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ import java.util.List;
 @RestController(ApiPaths.DATA_API_DISCIPLINE)
 @AllArgsConstructor
 public class DisciplineController {
+
+    private final DisciplineService disciplineService;
 
     @GetMapping
     public List<DisciplineDto> getDiscipline() {

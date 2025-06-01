@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.student.StudentDto;
+import ru.tusur.prediction.service.core.student.StudentService;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ import java.util.List;
 @RestController(ApiPaths.DATA_API_STUDENT)
 @AllArgsConstructor
 public class StudentController {
+
+    private final StudentService studentService;
 
     @GetMapping
     public List<StudentDto> getStudent() {

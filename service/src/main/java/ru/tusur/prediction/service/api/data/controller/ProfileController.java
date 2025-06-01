@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.profile.ProfileDto;
+import ru.tusur.prediction.service.core.profile.ProfileService;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ import java.util.List;
 @RestController(ApiPaths.DATA_API_PROFILE)
 @AllArgsConstructor
 public class ProfileController {
+
+    private final ProfileService profileService;
 
     @GetMapping
     public List<ProfileDto> getProfile() {

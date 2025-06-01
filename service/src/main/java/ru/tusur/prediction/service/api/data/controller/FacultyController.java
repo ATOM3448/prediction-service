@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.faculty.FacultyDto;
+import ru.tusur.prediction.service.core.faculty.FacultyService;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ import java.util.List;
 @RestController(ApiPaths.DATA_API_FACULTY)
 @AllArgsConstructor
 public class FacultyController {
+
+    private final FacultyService facultyService;
 
     @GetMapping
     public List<FacultyDto> getFaculty() {
