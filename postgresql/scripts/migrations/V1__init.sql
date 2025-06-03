@@ -1,85 +1,168 @@
-CREATE SEQUENCE organization_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS organization
+create table if not exists organization
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('organization_id_seq'),
-    name CHARACTER VARYING(60) NOT NULL
+    id                          bigserial           primary key,
+    name                        varchar(120)        not null
 );
 
-CREATE SEQUENCE IF NOT EXISTS faculty_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS faculty
+create table if not exists faculty
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('faculty_id_seq'),
-    organization_id INTEGER NOT NULL REFERENCES organization (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    name CHARACTER VARYING(60) NOT NULL,
-    CONSTRAINT name_identificator_combination UNIQUE (organization_id, name)
+    id                          bigserial           primary key,
+    organization_id             bigint              not null,
+    name                        varchar(120)        not null,
+
+    constraint faculty_organization_fk foreign key (organization_id) references organization (id),
+
+    constraint organization_id_name_combination unique (organization_id, name)
 );
 
-CREATE SEQUENCE IF NOT EXISTS program_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS program
+create index if not exists faculty_organization_id_idx on faculty(organization_id);
+
+create table if not exists department
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('program_id_seq'),
-    faculty_id INTEGER NOT NULL REFERENCES faculty (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    code CHARACTER VARYING(12) NOT NULL,
-    name CHARACTER VARYING(60) NOT NULL
+    id                          bigserial           primary key,
+    faculty_id                  bigint              not null,
+    name                        varchar(120)        not null,
+
+    constraint department_faculty_fk foreign key (faculty_id) references faculty (id),
+
+    constraint faculty_id_name_combination unique (faculty_id, name)
 );
 
-CREATE SEQUENCE IF NOT EXISTS profile_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS profile
+create index if not exists department_faculty_id_idx on department(faculty_id);
+
+create table if not exists program
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('profile_id_seq'),
-    program_id INTEGER NOT NULL REFERENCES program (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    name CHARACTER VARYING(60) NOT NULL
+    id                          bigserial           primary key,
+    department_id               bigint              not null,
+    code                        varchar(20)         not null,
+    name                        varchar(120)        not null,
+
+    constraint program_department_fk foreign key (department_id) references department (id),
+
+    constraint department_id_code_name_combination unique (department_id, code, name)
 );
 
-CREATE SEQUENCE IF NOT EXISTS teacher_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS teacher
+create index if not exists program_department_id_idx on program(department_id);
+
+create table if not exists profile
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('teacher_id_seq'),
-    organization_teacher_id INTEGER NOT NULL
+    id                          bigserial           primary key,
+    program_id                  bigint              not null,
+    name                        varchar(120)        not null,
+
+    constraint profile_program_fk foreign key (program_id) references program (id),
+
+    constraint program_id_name_combination unique (program_id, name)
 );
 
-CREATE SEQUENCE IF NOT EXISTS discipline_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS discipline
+create index if not exists profile_program_id_idx on profile(program_id);
+
+create table if not exists teacher
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('discipline_id_seq'),
-    profile_id INTEGER NOT NULL REFERENCES profile (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    teacher_id INTEGER NOT NULL REFERENCES teacher (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    semester INTEGER NOT NULL,
-    name CHARACTER VARYING(60) NOT NULL,
-    CONSTRAINT profile_techer_semester_combination UNIQUE (profile_id, teacher_id, semester)
+    id                          bigserial           primary key,
+    organization_teacher_id     bigint              not null
 );
 
-CREATE SEQUENCE IF NOT EXISTS indicator_group_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS indicator_group
+create index if not exists teacher_organization_teacher_id_idx on teacher(organization_teacher_id);
+
+create table if not exists discipline
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('indicator_group_id_seq'),
-    name CHARACTER VARYING(60) NOT NULL
+    id                          bigserial           primary key,
+    profile_id                  bigint              not null,
+    teacher_id                  bigint              not null,
+    semester                    int                 not null,
+    name                        varchar(120)        not null,
+
+    constraint discipline_profile_fk foreign key (profile_id) references profile (id),
+    constraint discipline_teacher_fk foreign key (teacher_id) references teacher (id),
+
+    constraint profile_id_teacher_id_semester_combination unique (profile_id, teacher_id, name)
 );
 
-CREATE SEQUENCE IF NOT EXISTS indicator_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS indicator
+create table if not exists indicator_type
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('indicator_id_seq'),
-    group_id INTEGER NOT NULL REFERENCES indicator_group (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    discipline_id INTEGER NOT NULL REFERENCES discipline (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    name CHARACTER VARYING(60) NOT NULL,
-    max_value INTEGER NOT NULL
+    id                          bigserial           primary key,
+    name                        varchar(120)        not null unique,
+    description                 varchar(120)        not null
 );
 
-CREATE SEQUENCE IF NOT EXISTS student_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS student
+create index if not exists indicator_type_name_idx on indicator_type(name);
+
+insert into indicator_type (name, description)
+values  ('ATTENDANCE_LECTURE_FISRT_PERIOD', 'Посещаемость лекций за промежуток 1'),
+        ('ATTENDANCE_LECTURE_SECOND_PERIOD', 'Посещаемость лекций за промежуток 2'),
+        ('ATTENDANCE_LECTURE_THIRD_PERIOD', 'Посещаемость лекций за промежуток 3'),
+        ('ATTENDANCE_PRACTICE_FISRT_PERIOD', 'Посещаемость практик за промежуток 1'),
+        ('ATTENDANCE_PRACTICE_SECOND_PERIOD', 'Посещаемость практик за промежуток 2'),
+        ('ATTENDANCE_PRACTICE_THIRD_PERIOD', 'Посещаемость практик за промежуток 3'),
+        ('RESULT_CONTROL_POINT_FIRST', 'Результат КТ 1'),
+        ('RESULT_CONTROL_POINT_SECOND', 'Результат КТ 2'),
+        ('RESULT_SESSION', 'Результат сессии'),
+        ('AVERANGE_RESULT', 'Средний балл')
+on conflict do nothing;
+
+create table if not exists indicator
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('student_id_seq'),
-    organization_student_id INTEGER NOT NULL
+    id                          bigserial           primary key,
+    indicator_type_id           bigint              not null,
+    discipline_id               bigint              not null,
+    name                        varchar(120)        not null,
+    max_value                   int                 not null,
+
+    constraint indicator_indicator_type_fk foreign key (indicator_type_id) references indicator_type (id),
+    constraint indicator_discipline_fk foreign key (discipline_id) references discipline (id),
+
+    constraint indicator_type_id_discipline_id_name_combination unique (indicator_type_id, discipline_id, name)
 );
 
-CREATE SEQUENCE IF NOT EXISTS result_id_seq START WITH 1 INCREMENT BY 1;
-CREATE TABLE IF NOT EXISTS result
+create index if not exists indicator_discipline_id_idx on indicator(discipline_id);
+
+create table if not exists student_group
 (
-    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('result_id_seq'),
-    indicator_id INTEGER NOT NULL REFERENCES indicator (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    student_id INTEGER NOT NULL REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    value DOUBLE PRECISION NOT NULL,
-    is_prediction BOOLEAN NOT NULL,
-    CONSTRAINT student_indicator_combination UNIQUE (indicator_id, student_id)
+    id                          bigserial           primary key,
+    department_id               bigint              not null,
+    name                        varchar(20)         not null,
+
+    constraint student_group_department_fk foreign key (department_id) references department (id),
+
+    constraint department_id_name_combination unique (department_id, name)
+);
+
+create table if not exists student
+(
+    id                          bigserial           primary key,
+    student_group_id            bigint              not null,
+    organization_student_id     bigint              not null,
+
+    constraint student_student_group_fk foreign key (student_group_id) references student_group (id),
+
+    constraint student_group_id_organization_student_id_combination unique (student_group_id, organization_student_id)
+);
+
+create index if not exists student_organization_student_id_idx on student(organization_student_id);
+
+create table if not exists result
+(
+    id                          bigserial           primary key,
+    indicator_id                bigint              not null,
+    student_id                  bigint              not null,
+    value                       double precision    not null,
+    is_prediction               boolean             not null,
+
+    constraint result_indicator_fk foreign key (indicator_id) references indicator (id),
+    constraint result_student_fk foreign key (student_id) references student (id),
+
+    constraint indicator_student_combination unique (indicator_id, student_id)
+);
+
+create index if not exists result_student_id_idx on result(student_id);
+
+create table if not exists next_session_averange_result
+(
+    id                          bigserial           primary key,
+    student_id                  bigint              not null,
+    value                       double precision    not null,
+    prediction_time             timestamptz(3)      not null        default now(),
+
+    constraint next_session_averange_result_student_fk foreign key (student_id) references student (id)
 );
