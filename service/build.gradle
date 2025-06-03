@@ -26,15 +26,22 @@ dependencies {
     implementation 'org.jdbi:jdbi3-postgres:3.49.4'
     implementation 'org.jdbi:jdbi3-spring5:3.49.4'
 
-    // Lombok для сокращения шаблонного кода
+    // Lombok
     implementation 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-    // MapStruct для маппинга объектов
+    // Jakarta EE
+    implementation 'jakarta.platform:jakarta.jakartaee-api:10.0.0'
+
+    // Swagger
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.19'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
+
+    // MapStruct
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
-    // Mockito для тестирования
+    // Mockito
     testImplementation 'org.mockito:mockito-core:5.7.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -43,12 +50,16 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
 spotless {
     java {
         target 'src/**/*.java'
         googleJavaFormat()
         removeUnusedImports()
-        trimTrailingWhitespace()
         endWithNewline()
     }
 }
