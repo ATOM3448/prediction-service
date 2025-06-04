@@ -4,6 +4,11 @@
 #  # Описание сервиса
 #  title: Сервис предсказания успеваемости
 spring:
+  security:
+    user:
+      name: user
+      password: 123456
+
   datasource:
     # URL-адрес базы данных PostgreSQL
     url: 'jdbc:postgresql://localhost:5432/prediction_service'
