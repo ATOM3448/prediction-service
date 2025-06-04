@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.profile.Profile;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(Profile.class)
-public interface ProfileRepository {
-
-}
+public interface ProfileRepository {}

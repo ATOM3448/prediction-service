@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.department.Department;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(Department.class)
-public interface DepartmentRepository {
-
-}
+public interface DepartmentRepository {}

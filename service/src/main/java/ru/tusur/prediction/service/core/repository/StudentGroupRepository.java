@@ -7,9 +7,6 @@ import ru.tusur.prediction.service.core.model.student.StudentGroup;
 /**
  * Интерфейс для управления объектами {@link StudentGroup}.
  */
-
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(StudentGroup.class)
-public interface StudentGroupRepository {
-
-}
+public interface StudentGroupRepository {}

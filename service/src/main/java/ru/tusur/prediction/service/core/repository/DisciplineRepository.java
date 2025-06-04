@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.discipline.Discipline;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(Discipline.class)
-public interface DisciplineRepository {
-
-}
+public interface DisciplineRepository {}

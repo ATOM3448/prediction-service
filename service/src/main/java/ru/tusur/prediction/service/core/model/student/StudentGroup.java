@@ -12,5 +12,4 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @AllArgsConstructor
 @Jacksonized
-public class StudentGroup {
-}
+public class StudentGroup {}

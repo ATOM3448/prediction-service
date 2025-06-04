@@ -14,11 +14,10 @@ import ru.tusur.prediction.service.core.ml.MlService;
 @AllArgsConstructor
 public class StudentController {
 
-    private final MlService mlService;
+  private final MlService mlService;
 
-    @GetMapping
-    public StudentPredictionResult getPredictionForStudent() {
-        return null;
-    }
-
+  @GetMapping
+  public StudentPredictionResult getPredictionForStudent() {
+    return null;
+  }
 }

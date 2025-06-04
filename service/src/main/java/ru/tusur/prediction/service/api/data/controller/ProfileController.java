@@ -1,12 +1,11 @@
 package ru.tusur.prediction.service.api.data.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.profile.ProfileDto;
 import ru.tusur.prediction.service.core.profile.ProfileService;
-
-import java.util.List;
 
 /**
  * Контроллер для работы с данными профилями подготовки.
@@ -16,21 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 public class ProfileController {
 
-    private final ProfileService profileService;
+  private final ProfileService profileService;
 
-    @GetMapping
-    public List<ProfileDto> getProfile() {
-        return null;
-    }
+  @GetMapping
+  public List<ProfileDto> getProfile() {
+    return null;
+  }
 
-    @PostMapping
-    public void saveProfile() {
+  @PostMapping
+  public void saveProfile() {}
 
-    }
-
-    @PutMapping
-    public void updateProfile() {
-
-    }
-
+  @PutMapping
+  public void updateProfile() {}
 }

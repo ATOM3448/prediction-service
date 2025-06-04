@@ -12,5 +12,4 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @AllArgsConstructor
 @Jacksonized
-public class Department {
-}
+public class Department {}

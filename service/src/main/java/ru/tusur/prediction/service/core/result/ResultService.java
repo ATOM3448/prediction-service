@@ -8,6 +8,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class ResultService {
-
-}
+public class ResultService {}

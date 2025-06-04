@@ -59,8 +59,6 @@ tasks.withType(JavaCompile) {
 spotless {
     java {
         target 'src/**/*.java'
-        googleJavaFormat()
-        removeUnusedImports()
-        endWithNewline()
+        googleJavaFormat().formatJavadoc(false)
     }
 }

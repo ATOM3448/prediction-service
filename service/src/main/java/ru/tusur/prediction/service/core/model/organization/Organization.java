@@ -14,14 +14,13 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class Organization {
 
-    /**
-     * Идентификатор записи.
-     */
-    private long id;
+  /**
+   * Идентификатор записи.
+   */
+  private long id;
 
-    /**
-     * Наименование организации.
-     */
-    private String name;
-
+  /**
+   * Наименование организации.
+   */
+  private String name;
 }

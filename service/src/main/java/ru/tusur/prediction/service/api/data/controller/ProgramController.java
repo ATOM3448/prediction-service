@@ -1,12 +1,11 @@
 package ru.tusur.prediction.service.api.data.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.program.ProgramDto;
 import ru.tusur.prediction.service.core.program.ProgramService;
-
-import java.util.List;
 
 /**
  * Контроллер для работы с данными программ подготовки.
@@ -16,21 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 public class ProgramController {
 
-    private final ProgramService programService;
+  private final ProgramService programService;
 
-    @GetMapping
-    public List<ProgramDto> getProgram() {
-        return null;
-    }
+  @GetMapping
+  public List<ProgramDto> getProgram() {
+    return null;
+  }
 
-    @PostMapping
-    public void saveProgram() {
+  @PostMapping
+  public void saveProgram() {}
 
-    }
-
-    @PutMapping
-    public void updateProgram() {
-
-    }
-    
+  @PutMapping
+  public void updateProgram() {}
 }

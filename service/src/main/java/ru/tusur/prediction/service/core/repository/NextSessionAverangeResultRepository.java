@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.result.NextSessionAverangeResult;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(NextSessionAverangeResult.class)
-public interface NextSessionAverangeResultRepository {
-
-}
+public interface NextSessionAverangeResultRepository {}

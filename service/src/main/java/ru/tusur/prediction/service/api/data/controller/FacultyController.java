@@ -2,6 +2,7 @@ package ru.tusur.prediction.service.api.data.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,6 @@ import ru.tusur.prediction.service.api.data.dto.faculty.FacultyDto;
 import ru.tusur.prediction.service.api.data.mapper.FacultyToFacultyDtoMapper;
 import ru.tusur.prediction.service.core.faculty.FacultyService;
 import ru.tusur.prediction.service.core.model.faculty.Faculty;
-
-import java.util.List;
 
 // TODO Аутентификация на всех эндпоинтах
 // TODO Подключить свагер
@@ -28,28 +27,23 @@ import java.util.List;
 @AllArgsConstructor
 public class FacultyController {
 
-    private final FacultyService facultyService;
+  private final FacultyService facultyService;
 
-    private final FacultyToFacultyDtoMapper facultyToFacultyDtoMapper;
+  private final FacultyToFacultyDtoMapper facultyToFacultyDtoMapper;
 
-    @GetMapping
-    @Operation(description = "Возвращает список факультетов в организации клиента")
-    public List<FacultyDto> getFaculty() {
-        int organizationId = TempContext.ORGANIZATION_ID;
+  @GetMapping
+  @Operation(description = "Возвращает список факультетов в организации клиента")
+  public List<FacultyDto> getFaculty() {
+    int organizationId = TempContext.ORGANIZATION_ID;
 
-        List<Faculty> faculties = facultyService.getFacultiesByOrganizationId(organizationId);
+    List<Faculty> faculties = facultyService.getFacultiesByOrganizationId(organizationId);
 
-        return facultyToFacultyDtoMapper.map(faculties);
-    }
+    return facultyToFacultyDtoMapper.map(faculties);
+  }
 
-    @PostMapping
-    public void saveFaculty() {
+  @PostMapping
+  public void saveFaculty() {}
 
-    }
-
-    @PutMapping
-    public void updateFaculty() {
-
-    }
-
+  @PutMapping
+  public void updateFaculty() {}
 }

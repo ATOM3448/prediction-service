@@ -15,20 +15,19 @@ import org.jdbi.v3.core.mapper.reflect.ColumnName;
 @Jacksonized
 public class Faculty {
 
-    /**
-     * Идентификатор записи.
-     */
-    private long id;
+  /**
+   * Идентификатор записи.
+   */
+  private long id;
 
-    /**
-     * Организация факультета.
-     */
-    @ColumnName("organization_id")
-    private long organizationId;
+  /**
+   * Организация факультета.
+   */
+  @ColumnName("organization_id")
+  private long organizationId;
 
-    /**
-     * Наименование факультета.
-     */
-    private String name;
-
+  /**
+   * Наименование факультета.
+   */
+  private String name;
 }

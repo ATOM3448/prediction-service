@@ -1,12 +1,11 @@
 package ru.tusur.prediction.service.api.data.controller;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.tusur.prediction.service.api.data.ApiPaths;
 import ru.tusur.prediction.service.api.data.dto.teacher.TeacherDto;
 import ru.tusur.prediction.service.core.teacher.TeacherService;
-
-import java.util.List;
 
 /**
  * Контроллер для работы с данными преподавателей.
@@ -16,21 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 public class TeacherController {
 
-    private final TeacherService teacherService;
+  private final TeacherService teacherService;
 
-    @GetMapping
-    public List<TeacherDto> getTeacher() {
-        return null;
-    }
+  @GetMapping
+  public List<TeacherDto> getTeacher() {
+    return null;
+  }
 
-    @PostMapping
-    public void saveTeacher() {
+  @PostMapping
+  public void saveTeacher() {}
 
-    }
-
-    @PutMapping
-    public void updateTeacher() {
-
-    }
-
+  @PutMapping
+  public void updateTeacher() {}
 }

@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.student.Student;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(Student.class)
-public interface StudentRepository {
-
-}
+public interface StudentRepository {}

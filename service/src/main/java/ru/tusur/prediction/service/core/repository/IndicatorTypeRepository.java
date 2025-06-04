@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.indicator.IndicatorType;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(IndicatorType.class)
-public interface IndicatorTypeRepository {
-
-}
+public interface IndicatorTypeRepository {}

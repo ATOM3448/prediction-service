@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.result.Result;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(Result.class)
-public interface ResultRepository {
-
-}
+public interface ResultRepository {}

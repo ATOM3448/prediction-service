@@ -9,6 +9,4 @@ import ru.tusur.prediction.service.core.model.program.Program;
  */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(Program.class)
-public interface ProgramRepository {
-
-}
+public interface ProgramRepository {}
