@@ -21,19 +21,19 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Configuration
 public class CommonJdbiConfiguration {
 
-  @Bean
-  public Jdbi jdbi(DataSource dataSource) {
-    ConnectionFactory connectionFactory = new SpringConnectionFactory(dataSource);
-    Jdbi jdbi = Jdbi.create(connectionFactory);
-    jdbi.installPlugin(new SqlObjectPlugin())
-        .installPlugin(new PostgresPlugin())
-        .installPlugin(new Jackson2Plugin());
-    jdbi.getConfig(Jackson2Config.class).setMapper(OBJECT_MAPPER_WITH_DEFAULT_JAVA_TIME);
-    return jdbi;
-  }
+    @Bean
+    public Jdbi jdbi(DataSource dataSource) {
+        ConnectionFactory connectionFactory = new SpringConnectionFactory(dataSource);
+        Jdbi jdbi = Jdbi.create(connectionFactory);
+        jdbi.installPlugin(new SqlObjectPlugin())
+                .installPlugin(new PostgresPlugin())
+                .installPlugin(new Jackson2Plugin());
+        jdbi.getConfig(Jackson2Config.class).setMapper(OBJECT_MAPPER_WITH_DEFAULT_JAVA_TIME);
+        return jdbi;
+    }
 
-  @Bean
-  public DataSourceTransactionManager transactionManager(DataSource dataSource) {
-    return new DataSourceTransactionManager(dataSource);
-  }
+    @Bean
+    public DataSourceTransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
 }

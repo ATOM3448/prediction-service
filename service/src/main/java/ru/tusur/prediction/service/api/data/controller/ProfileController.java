@@ -15,16 +15,16 @@ import ru.tusur.prediction.service.core.profile.ProfileService;
 @AllArgsConstructor
 public class ProfileController {
 
-  private final ProfileService profileService;
+    private final ProfileService profileService;
 
-  @GetMapping
-  public List<ProfileDto> getProfile() {
-    return null;
-  }
+    @GetMapping
+    public List<ProfileDto> getProfile() {
+        return null;
+    }
 
-  @PostMapping
-  public void saveProfile() {}
+    @PostMapping
+    public void saveProfile() {}
 
-  @PutMapping
-  public void updateProfile() {}
+    @PutMapping
+    public void updateProfile() {}
 }

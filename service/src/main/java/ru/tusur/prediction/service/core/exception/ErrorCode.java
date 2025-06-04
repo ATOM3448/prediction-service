@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
-  INTERNAL_ERROR(1);
+    INTERNAL_ERROR(1);
 
-  private final int code;
+    private final int code;
 }

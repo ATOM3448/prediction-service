@@ -11,13 +11,13 @@ import ru.tusur.prediction.service.core.model.faculty.Faculty;
 @Mapper(componentModel = "spring")
 public interface FacultyToFacultyDtoMapper {
 
-  /**
-   * Конвертация {@link Faculty} в {@link FacultyDto}.
-   */
-  FacultyDto map(Faculty faculty);
+    /**
+     * Конвертация {@link Faculty} в {@link FacultyDto}.
+     */
+    FacultyDto map(Faculty faculty);
 
-  /**
-   * Конвертация списка {@link Faculty} в список {@link FacultyDto}
-   */
-  List<FacultyDto> map(List<Faculty> faculties);
+    /**
+     * Конвертация списка {@link Faculty} в список {@link FacultyDto}
+     */
+    List<FacultyDto> map(List<Faculty> faculties);
 }

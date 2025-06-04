@@ -59,6 +59,6 @@ tasks.withType(JavaCompile) {
 spotless {
     java {
         target 'src/**/*.java'
-        googleJavaFormat().formatJavadoc(false)
+        googleJavaFormat().aosp().formatJavadoc(false)
     }
 }

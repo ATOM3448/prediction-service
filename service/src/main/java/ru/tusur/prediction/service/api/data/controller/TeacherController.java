@@ -15,16 +15,16 @@ import ru.tusur.prediction.service.core.teacher.TeacherService;
 @AllArgsConstructor
 public class TeacherController {
 
-  private final TeacherService teacherService;
+    private final TeacherService teacherService;
 
-  @GetMapping
-  public List<TeacherDto> getTeacher() {
-    return null;
-  }
+    @GetMapping
+    public List<TeacherDto> getTeacher() {
+        return null;
+    }
 
-  @PostMapping
-  public void saveTeacher() {}
+    @PostMapping
+    public void saveTeacher() {}
 
-  @PutMapping
-  public void updateTeacher() {}
+    @PutMapping
+    public void updateTeacher() {}
 }

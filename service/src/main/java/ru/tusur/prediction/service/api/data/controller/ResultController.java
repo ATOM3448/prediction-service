@@ -15,16 +15,16 @@ import ru.tusur.prediction.service.core.result.ResultService;
 @AllArgsConstructor
 public class ResultController {
 
-  private final ResultService resultService;
+    private final ResultService resultService;
 
-  @GetMapping
-  public List<ResultDto> getResult() {
-    return null;
-  }
+    @GetMapping
+    public List<ResultDto> getResult() {
+        return null;
+    }
 
-  @PostMapping
-  public void saveResult() {}
+    @PostMapping
+    public void saveResult() {}
 
-  @PutMapping
-  public void updateResult() {}
+    @PutMapping
+    public void updateResult() {}
 }

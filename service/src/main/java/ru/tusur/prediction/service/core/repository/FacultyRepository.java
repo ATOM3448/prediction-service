@@ -14,12 +14,12 @@ import ru.tusur.prediction.service.core.model.faculty.Faculty;
 @RegisterConstructorMapper(Faculty.class)
 public interface FacultyRepository {
 
-  @SqlQuery(
-      """
+    @SqlQuery(
+            """
             select
                 *
             from faculty f
             where organization_id = :organizationId;
             """)
-  List<Faculty> getFacultiesByOrganizationId(@Bind("organizationId") int organizationId);
+    List<Faculty> getFacultiesByOrganizationId(@Bind("organizationId") int organizationId);
 }

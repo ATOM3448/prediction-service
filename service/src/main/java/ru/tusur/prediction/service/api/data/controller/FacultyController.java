@@ -27,23 +27,23 @@ import ru.tusur.prediction.service.core.model.faculty.Faculty;
 @AllArgsConstructor
 public class FacultyController {
 
-  private final FacultyService facultyService;
+    private final FacultyService facultyService;
 
-  private final FacultyToFacultyDtoMapper facultyToFacultyDtoMapper;
+    private final FacultyToFacultyDtoMapper facultyToFacultyDtoMapper;
 
-  @GetMapping
-  @Operation(description = "Возвращает список факультетов в организации клиента")
-  public List<FacultyDto> getFaculty() {
-    int organizationId = TempContext.ORGANIZATION_ID;
+    @GetMapping
+    @Operation(description = "Возвращает список факультетов в организации клиента")
+    public List<FacultyDto> getFaculty() {
+        int organizationId = TempContext.ORGANIZATION_ID;
 
-    List<Faculty> faculties = facultyService.getFacultiesByOrganizationId(organizationId);
+        List<Faculty> faculties = facultyService.getFacultiesByOrganizationId(organizationId);
 
-    return facultyToFacultyDtoMapper.map(faculties);
-  }
+        return facultyToFacultyDtoMapper.map(faculties);
+    }
 
-  @PostMapping
-  public void saveFaculty() {}
+    @PostMapping
+    public void saveFaculty() {}
 
-  @PutMapping
-  public void updateFaculty() {}
+    @PutMapping
+    public void updateFaculty() {}
 }

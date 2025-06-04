@@ -15,16 +15,16 @@ import ru.tusur.prediction.service.core.discipline.DisciplineService;
 @AllArgsConstructor
 public class DisciplineController {
 
-  private final DisciplineService disciplineService;
+    private final DisciplineService disciplineService;
 
-  @GetMapping
-  public List<DisciplineDto> getDiscipline() {
-    return null;
-  }
+    @GetMapping
+    public List<DisciplineDto> getDiscipline() {
+        return null;
+    }
 
-  @PostMapping
-  public void saveDiscipline() {}
+    @PostMapping
+    public void saveDiscipline() {}
 
-  @PutMapping
-  public void updateDiscipline() {}
+    @PutMapping
+    public void updateDiscipline() {}
 }

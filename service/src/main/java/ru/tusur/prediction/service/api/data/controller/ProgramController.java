@@ -15,16 +15,16 @@ import ru.tusur.prediction.service.core.program.ProgramService;
 @AllArgsConstructor
 public class ProgramController {
 
-  private final ProgramService programService;
+    private final ProgramService programService;
 
-  @GetMapping
-  public List<ProgramDto> getProgram() {
-    return null;
-  }
+    @GetMapping
+    public List<ProgramDto> getProgram() {
+        return null;
+    }
 
-  @PostMapping
-  public void saveProgram() {}
+    @PostMapping
+    public void saveProgram() {}
 
-  @PutMapping
-  public void updateProgram() {}
+    @PutMapping
+    public void updateProgram() {}
 }

@@ -13,9 +13,9 @@ import ru.tusur.prediction.service.core.repository.FacultyRepository;
 @AllArgsConstructor
 public class FacultyService {
 
-  private final FacultyRepository facultyRepository;
+    private final FacultyRepository facultyRepository;
 
-  public List<Faculty> getFacultiesByOrganizationId(int organizationId) {
-    return facultyRepository.getFacultiesByOrganizationId(organizationId);
-  }
+    public List<Faculty> getFacultiesByOrganizationId(int organizationId) {
+        return facultyRepository.getFacultiesByOrganizationId(organizationId);
+    }
 }

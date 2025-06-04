@@ -13,11 +13,11 @@ import ru.tusur.prediction.service.core.model.organization.Organization;
 @RegisterConstructorMapper(Organization.class)
 public interface OrganizationRepository {
 
-  @SqlQuery(
-      """
+    @SqlQuery(
+            """
             select
                 *
             from organization o;
             """)
-  List<Organization> getOrganizations();
+    List<Organization> getOrganizations();
 }
