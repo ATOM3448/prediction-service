@@ -11,13 +11,11 @@ import ru.tusur.prediction.service.api.security.apikey.model.apikey.ApiKey;
  */
 public class ApiKeyAuthenticationConverter implements AuthenticationConverter {
 
-    private static final String API_KEY_PREFIX = "Api-Key ";
-
     @Override
     public Authentication convert(HttpServletRequest request) {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader != null && authHeader.startsWith(API_KEY_PREFIX)) {
-            return new ApiKey(authHeader.substring(API_KEY_PREFIX.length()));
+        if (authHeader != null) {
+            return new ApiKey(authHeader);
         }
 
         return null;

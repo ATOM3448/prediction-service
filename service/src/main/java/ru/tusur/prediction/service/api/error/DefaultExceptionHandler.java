@@ -1,5 +1,6 @@
 package ru.tusur.prediction.service.api.error;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,17 +25,17 @@ import ru.tusur.prediction.service.core.error.ErrorCode;
 import ru.tusur.prediction.service.core.error.ErrorMessageResolver;
 import ru.tusur.prediction.service.core.error.ServiceException;
 
-// TODO логирование
 /**
  * Базовый класс для обработки исключений API.
  */
+@Slf4j
 @RestControllerAdvice
 public class DefaultExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Error> handle(Exception exception) {
-        String test = "ggg";
-        String ff = test;
+        log.error("Ошибка обработки запроса", exception);
+
         return ResponseEntity.status(getHttpStatus(exception))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(getError(exception));

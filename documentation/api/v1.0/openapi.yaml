@@ -1,0 +1,246 @@
+openapi: 3.0.1
+externalDocs:
+  description: Документация
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /data-api/teacher:
+    get:
+      tags:
+      - teacher-controller
+      operationId: getTeacher
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeacherDto'
+    put:
+      tags:
+      - teacher-controller
+      operationId: updateTeacher
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - teacher-controller
+      operationId: saveTeacher
+      responses:
+        "200":
+          description: OK
+  /data-api/student:
+    get:
+      tags:
+      - student-controller
+      operationId: getStudent
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentDto'
+    put:
+      tags:
+      - student-controller
+      operationId: updateStudent
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - student-controller
+      operationId: saveStudent
+      responses:
+        "200":
+          description: OK
+  /data-api/result:
+    get:
+      tags:
+      - result-controller
+      operationId: getResult
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResultDto'
+    put:
+      tags:
+      - result-controller
+      operationId: updateResult
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - result-controller
+      operationId: saveResult
+      responses:
+        "200":
+          description: OK
+  /data-api/program:
+    get:
+      tags:
+      - program-controller
+      operationId: getProgram
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProgramDto'
+    put:
+      tags:
+      - program-controller
+      operationId: updateProgram
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - program-controller
+      operationId: saveProgram
+      responses:
+        "200":
+          description: OK
+  /data-api/profile:
+    get:
+      tags:
+      - profile-controller
+      operationId: getProfile
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProfileDto'
+    put:
+      tags:
+      - profile-controller
+      operationId: updateProfile
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - profile-controller
+      operationId: saveProfile
+      responses:
+        "200":
+          description: OK
+  /data-api/discipline:
+    get:
+      tags:
+      - discipline-controller
+      operationId: getDiscipline
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DisciplineDto'
+    put:
+      tags:
+      - discipline-controller
+      operationId: updateDiscipline
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - discipline-controller
+      operationId: saveDiscipline
+      responses:
+        "200":
+          description: OK
+  /data-api/faculty:
+    get:
+      tags:
+      - Работа с данными факультетов
+      description: Возвращает список факультетов в организации клиента
+      operationId: getFaculty
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Faculty'
+    post:
+      tags:
+      - Работа с данными факультетов
+      operationId: saveFaculty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+        required: true
+      responses:
+        "200":
+          description: OK
+  /:
+    get:
+      tags:
+      - student-controller
+      operationId: getPredictionForStudent_1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/StudentPredictionResult'
+components:
+  schemas:
+    Faculty:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Наименование факультета
+      description: "Сущность, описывающая данные по факультету"
+    TeacherDto:
+      type: object
+    StudentDto:
+      type: object
+    ResultDto:
+      type: object
+    ProgramDto:
+      type: object
+    ProfileDto:
+      type: object
+    DisciplineDto:
+      type: object
+    StudentPredictionResult:
+      type: object
+  securitySchemes:
+    apiAuth:
+      type: apiKey
+      description: Api key
+      name: Authorization
+      in: header

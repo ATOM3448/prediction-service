@@ -11,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface ApiKeyRepository {
 
+    /**
+     * Возвращает идентификатор организации, под которой обращается клиент.
+     *
+     * @param value Значение api key.
+     * @return Идентификатор организации клиента.
+     */
     @SqlQuery(
             """
             select ak.organization_id

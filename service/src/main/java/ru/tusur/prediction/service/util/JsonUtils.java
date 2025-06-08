@@ -28,7 +28,7 @@ import ru.tusur.prediction.service.core.error.ServiceException;
  * Методы для работы с форматом json.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class JsonUtils {
+public final class JsonUtils {
 
     public static final ObjectMapper OBJECT_MAPPER =
             new ObjectMapper()

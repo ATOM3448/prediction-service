@@ -68,7 +68,13 @@ public class ApiKeySecurityConfiguration {
 
             httpSecurity
                     .addFilterAt(authenticationFilter, BasicAuthenticationFilter.class)
-                    .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+                    .authorizeHttpRequests(
+                            authorize ->
+                                    authorize
+                                            .requestMatchers("/v3/api-docs/**", "/swagger-ui/**")
+                                            .permitAll()
+                                            .anyRequest()
+                                            .authenticated())
                     .exceptionHandling(
                             exceptionHandling ->
                                     exceptionHandling.authenticationEntryPoint(

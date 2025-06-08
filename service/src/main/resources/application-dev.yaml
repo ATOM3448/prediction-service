@@ -1,8 +1,13 @@
-#service:
-#  # Идентификатор сервиса
-#  id: prediction-service
-#  # Описание сервиса
-#  title: Сервис предсказания успеваемости
+
+# Настройки springdoc
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: swagger-ui.html
+# Команда для сохранения доки: curl -o openapi.yaml http://localhost:8080/v3/api-docs.yaml
+
 spring:
   security:
     user:

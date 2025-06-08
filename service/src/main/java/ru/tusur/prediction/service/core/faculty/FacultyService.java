@@ -2,6 +2,7 @@ package ru.tusur.prediction.service.core.faculty;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import ru.tusur.prediction.service.core.repository.FacultyRepository;
 /**
  * Сервис для работы с факультетами.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FacultyService {
@@ -41,6 +43,10 @@ public class FacultyService {
 
         try {
             facultyRepository.saveFaculty(organizationId, name);
+            log.info(
+                    "Данные по факультету \"{}\" для организации #{} сохранены",
+                    name,
+                    organizationId);
         } catch (UnableToExecuteStatementException ex) {
             throw new ServiceException(ErrorCode.DUPLICATE, ErrorMessages.DUPLICATE_MESSAGE);
         }

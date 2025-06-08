@@ -15,6 +15,12 @@ import ru.tusur.prediction.service.core.model.faculty.Faculty;
 @RegisterConstructorMapper(Faculty.class)
 public interface FacultyRepository {
 
+    /**
+     * Возвращает список факультетов организации.
+     *
+     * @param organizationId Идентификатор организации.
+     * @return Список факультетов.
+     */
     @SqlQuery(
             """
             select
@@ -26,6 +32,12 @@ public interface FacultyRepository {
             """)
     List<Faculty> getFacultiesByOrganizationId(@Bind("organizationId") long organizationId);
 
+    /**
+     * Сохраняет данные по факультету.
+     *
+     * @param organizationId Идентификатор организации.
+     * @param name Наименование факультета.
+     */
     @SqlUpdate(
             """
             insert into faculty (organization_id, name)

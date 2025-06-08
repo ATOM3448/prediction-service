@@ -11,9 +11,6 @@ import ru.tusur.prediction.service.api.data.dto.faculty.FacultyDto;
 import ru.tusur.prediction.service.api.data.mapper.FacultyToFacultyDtoMapper;
 import ru.tusur.prediction.service.core.faculty.FacultyService;
 
-// TODO Аутентификация на всех эндпоинтах
-// TODO Подключить свагер
-// TODO Логирование
 /**
  * Контроллер для работы с данными факультетов
  */
