@@ -1,4 +1,4 @@
-package ru.tusur.prediction.service.core.exception;
+package ru.tusur.prediction.service.core.error;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

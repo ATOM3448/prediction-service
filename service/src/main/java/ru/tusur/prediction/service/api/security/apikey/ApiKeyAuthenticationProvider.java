@@ -24,7 +24,7 @@ public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
                     apiKeyRepository.getOrganizationByApiKey((String) apiKey.getCredentials());
 
             if (organization.isEmpty()) {
-                throw new BadCredentialsException("Не корректный API-ключ");
+                throw new BadCredentialsException("Некорректный API-ключ");
             }
 
             ApiKey trustedApiKey = new ApiKey((String) apiKey.getCredentials(), organization.get());

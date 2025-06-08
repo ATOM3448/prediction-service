@@ -11,9 +11,14 @@ import ru.tusur.prediction.service.core.repository.*;
 @Configuration
 public class RepositoryJdbiConfiguration {
 
-    @Bean
+    /*@Bean
     OrganizationRepository organizationRepository(Jdbi jdbi) {
         return jdbi.onDemand(OrganizationRepository.class);
+    }*/
+
+    @Bean
+    ApiKeyRepository apiKeyRepository(Jdbi jdbi) {
+        return jdbi.onDemand(ApiKeyRepository.class);
     }
 
     @Bean

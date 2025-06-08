@@ -1,6 +1,6 @@
 package ru.tusur.prediction.service.util;
 
-import static ru.tusur.prediction.service.core.exception.ErrorCode.INTERNAL_ERROR;
+import static ru.tusur.prediction.service.core.error.ErrorCode.INTERNAL_ERROR;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -22,7 +22,7 @@ import java.util.TimeZone;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.util.ResourceUtils;
-import ru.tusur.prediction.service.core.exception.ServiceException;
+import ru.tusur.prediction.service.core.error.ServiceException;
 
 /**
  * Методы для работы с форматом json.

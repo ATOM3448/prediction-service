@@ -16,10 +16,10 @@ public class ApiKeyAuthenticationConverter implements AuthenticationConverter {
     @Override
     public Authentication convert(HttpServletRequest request) {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null || !authHeader.startsWith(API_KEY_PREFIX)) {
-            return null;
+        if (authHeader != null && authHeader.startsWith(API_KEY_PREFIX)) {
+            return new ApiKey(authHeader.substring(API_KEY_PREFIX.length()));
         }
 
-        return new ApiKey(authHeader.substring(API_KEY_PREFIX.length()));
+        return null;
     }
 }

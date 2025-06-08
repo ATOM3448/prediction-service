@@ -1,6 +1,5 @@
 package ru.tusur.prediction.service.configuration.security.apikey;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -8,9 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import ru.tusur.prediction.service.api.security.apikey.ApiKeyAuthenticationConverter;
 import ru.tusur.prediction.service.api.security.apikey.ApiKeyAuthenticationProvider;
@@ -31,6 +34,13 @@ public class ApiKeySecurityConfiguration {
     @RequiredArgsConstructor
     public static class ApiKeySecurityFilterChainConfiguration {
 
+        private final AuthenticationSuccessHandler authenticationSuccessHandler =
+                ((request, response, authentication) -> {});
+
+        private final AuthenticationFailureHandler authenticationFailureHandler;
+
+        private final AuthenticationEntryPoint authenticationEntryPoint;
+
         private final ApiKeyAuthenticationConverter apiKeyAuthenticationConverter;
 
         private final ApiKeyAuthenticationProvider apiKeyAuthenticationProvider;
@@ -39,9 +49,10 @@ public class ApiKeySecurityConfiguration {
         SecurityFilterChain apiKeySecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
             httpSecurity
-                    .formLogin(login -> login.disable())
-                    .httpBasic(basic -> basic.disable())
-                    .logout(logout -> logout.disable())
+                    .formLogin(AbstractHttpConfigurer::disable)
+                    .httpBasic(AbstractHttpConfigurer::disable)
+                    .logout(AbstractHttpConfigurer::disable)
+                    .csrf(AbstractHttpConfigurer::disable)
                     .sessionManagement(
                             session ->
                                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -51,19 +62,17 @@ public class ApiKeySecurityConfiguration {
 
             AuthenticationFilter authenticationFilter =
                     new AuthenticationFilter(authenticationManager, apiKeyAuthenticationConverter);
-            authenticationFilter.setSuccessHandler(
-                    (request, response, authentication) ->
-                            response.setStatus(HttpServletResponse.SC_OK));
-            authenticationFilter.setFailureHandler(
-                    (request, response, exception) -> {
-                        response.sendError(
-                                HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
-                    });
+
+            authenticationFilter.setSuccessHandler(authenticationSuccessHandler);
+            authenticationFilter.setFailureHandler(authenticationFailureHandler);
 
             httpSecurity
                     .addFilterAt(authenticationFilter, BasicAuthenticationFilter.class)
                     .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-                    .csrf(csrf -> csrf.disable());
+                    .exceptionHandling(
+                            exceptionHandling ->
+                                    exceptionHandling.authenticationEntryPoint(
+                                            authenticationEntryPoint));
             return httpSecurity.build();
         }
     }
