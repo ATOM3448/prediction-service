@@ -32,6 +32,7 @@ public class FacultyController {
     }
 
     @PostMapping
+    @Operation(description = "Сохраняет информацию по факультету организации клиента")
     public void saveFaculty(@RequestBody FacultyDto faculty) {
         facultyService.saveFaculty(faculty.name());
     }

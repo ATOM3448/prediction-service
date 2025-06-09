@@ -11,8 +11,8 @@ import org.jdbi.v3.core.mapper.reflect.ColumnName;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @Jacksonized
+@AllArgsConstructor
 public class Faculty {
 
     /**

@@ -71,7 +71,7 @@ public class ApiKeySecurityConfiguration {
                     .authorizeHttpRequests(
                             authorize ->
                                     authorize
-                                            .requestMatchers("/v3/api-docs/**", "/swagger-ui/**")
+                                            .requestMatchers("/v3/**", "/swagger-ui/**")
                                             .permitAll()
                                             .anyRequest()
                                             .authenticated())

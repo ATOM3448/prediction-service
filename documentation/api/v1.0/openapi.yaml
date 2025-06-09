@@ -191,6 +191,7 @@ paths:
     post:
       tags:
       - Работа с данными факультетов
+      description: Сохраняет информацию по факультету организации клиента
       operationId: saveFaculty
       requestBody:
         content:
@@ -201,18 +202,25 @@ paths:
       responses:
         "200":
           description: OK
-  /:
+  /prediction-api/student:
     get:
       tags:
-      - student-controller
-      operationId: getPredictionForStudent_1
+      - Работа с моделью предсказания по данным студентов
+      description: Возвращает средний балл ближайшей сессии
+      operationId: getPredictionForStudent
+      parameters:
+      - name: studentResults
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/StudentResultsDto'
       responses:
         "200":
           description: OK
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/StudentPredictionResult'
+                $ref: '#/components/schemas/StudentPredictionResultDto'
 components:
   schemas:
     Faculty:
@@ -224,6 +232,126 @@ components:
           type: string
           description: Наименование факультета
       description: "Сущность, описывающая данные по факультету"
+    Discipline:
+      required:
+      - attendanceLectureFirstPeriod
+      - attendanceLectureSecondPeriod
+      - attendanceLectureThirdPeriod
+      - attendancePracticeFirstPeriod
+      - attendancePracticeSecondPeriod
+      - attendancePracticeThirdPeriod
+      - resultControlPointFirst
+      - resultControlPointSecond
+      - resultSession
+      type: object
+      properties:
+        attendanceLectureFirstPeriod:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Посещаемость лекций за промежуток 1
+          format: float
+        attendanceLectureSecondPeriod:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Посещаемость лекций за промежуток 2
+          format: float
+        attendanceLectureThirdPeriod:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Посещаемость лекций за промежуток 3
+          format: float
+        attendancePracticeFirstPeriod:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Посещаемость практик за промежуток 1
+          format: float
+        attendancePracticeSecondPeriod:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Посещаемость практик за промежуток 2
+          format: float
+        attendancePracticeThirdPeriod:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Посещаемость практик за промежуток 3
+          format: float
+        resultControlPointFirst:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Результат КТ 1
+          format: float
+        resultControlPointSecond:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Результат КТ 2
+          format: float
+        resultSession:
+          maximum: 0.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          type: number
+          description: Результат сессии
+          format: float
+      description: "Сущность, описывающая результаты студента по дисциплине"
+    Semester:
+      required:
+      - disciplines
+      type: object
+      properties:
+        disciplines:
+          maxItems: 8
+          minItems: 1
+          type: array
+          description: Данные успеваемости по дисциплинам
+          items:
+            $ref: '#/components/schemas/Discipline'
+      description: "Сущность, описывающая данные успеваемости за семестр"
+    StudentResultsDto:
+      required:
+      - semesters
+      type: object
+      properties:
+        semesters:
+          maxItems: 8
+          minItems: 1
+          type: array
+          description: Данные успеваемости по семестрам
+          items:
+            $ref: '#/components/schemas/Semester'
+    StudentPredictionResultDto:
+      required:
+      - predictionResult
+      type: object
+      properties:
+        predictionResult:
+          type: integer
+          description: "Средний балл студента, округленный до целого"
+          format: int32
     TeacherDto:
       type: object
     StudentDto:
@@ -235,8 +363,6 @@ components:
     ProfileDto:
       type: object
     DisciplineDto:
-      type: object
-    StudentPredictionResult:
       type: object
   securitySchemes:
     apiAuth:

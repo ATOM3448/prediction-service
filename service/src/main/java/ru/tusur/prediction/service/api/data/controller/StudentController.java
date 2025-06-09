@@ -10,7 +10,7 @@ import ru.tusur.prediction.service.core.student.StudentService;
 /**
  * Контроллер для работы с данными студентов.
  */
-@RestController
+@RestController("dataApiStudentController")
 @RequestMapping(ApiPaths.DATA_API_STUDENT)
 @AllArgsConstructor
 public class StudentController {

@@ -1,23 +1,38 @@
 package ru.tusur.prediction.service.api.prediction.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tusur.prediction.service.api.prediction.ApiPaths;
-import ru.tusur.prediction.service.api.prediction.dto.result.StudentPredictionResult;
-import ru.tusur.prediction.service.core.ml.MlService;
-
+import ru.tusur.prediction.service.api.prediction.dto.result.StudentPredictionResultDto;
+import ru.tusur.prediction.service.api.prediction.dto.student.StudentResultsDto;
+import ru.tusur.prediction.service.api.prediction.mapper.StudentPredictionResultDtoMapper;
+import ru.tusur.prediction.service.core.onnx.OnnxService;
+// TODO В базе для пересдачи
 /**
  * Контроллер для работы с запросами предсказаний по студентам.
  */
-@RestController(ApiPaths.PREDICTION_API_STUDENT)
+@Tag(name = "Работа с моделью предсказания по данным студентов")
+@RestController("predictionApiStudentController")
+@RequestMapping(ApiPaths.PREDICTION_API_STUDENT)
+@Validated
 @AllArgsConstructor
 public class StudentController {
 
-    private final MlService mlService;
+    private final OnnxService mlService;
+
+    private final StudentPredictionResultDtoMapper studentPredictionResultDtoMapper;
 
     @GetMapping
-    public StudentPredictionResult getPredictionForStudent() {
-        return null;
+    @Operation(description = "Возвращает средний балл ближайшей сессии")
+    public StudentPredictionResultDto getPredictionForStudent(
+            @Valid @RequestBody StudentResultsDto studentResults) {
+        return studentPredictionResultDtoMapper.map(mlService.predict(studentResults));
     }
 }
