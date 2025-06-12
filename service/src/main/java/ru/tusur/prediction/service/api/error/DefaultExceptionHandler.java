@@ -66,11 +66,8 @@ public class DefaultExceptionHandler {
         if (exception instanceof AccessDeniedException) {
             return HttpStatus.FORBIDDEN;
         }
-        if (exception instanceof InternalAuthenticationServiceException) {
-            return HttpStatus.FORBIDDEN;
-        }
         if (exception instanceof AuthenticationException) {
-            return HttpStatus.FORBIDDEN;
+            return HttpStatus.UNAUTHORIZED;
         }
         if (exception instanceof MethodArgumentTypeMismatchException) {
             return HttpStatus.BAD_REQUEST;
@@ -105,12 +102,11 @@ public class DefaultExceptionHandler {
                 || exception instanceof HttpMessageNotReadableException) {
             return null;
         }
-        if (exception instanceof BadCredentialsException) {
-            return buildError(ErrorCode.UNAUTHORIZED);
-        }
-        if (exception instanceof AccessDeniedException
-                || exception instanceof AuthenticationException) {
+        if (exception instanceof AccessDeniedException) {
             return buildError(ErrorCode.ACCESS_DENIED);
+        }
+        if (exception instanceof AuthenticationException) {
+            return buildError(ErrorCode.UNAUTHORIZED);
         }
         if (exception instanceof MissingServletRequestParameterException
                 || exception instanceof MethodArgumentTypeMismatchException
