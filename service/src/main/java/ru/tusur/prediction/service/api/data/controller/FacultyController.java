@@ -12,7 +12,7 @@ import ru.tusur.prediction.service.api.data.mapper.FacultyToFacultyDtoMapper;
 import ru.tusur.prediction.service.core.faculty.FacultyService;
 
 /**
- * Контроллер для работы с данными факультетов
+ * Контроллер для работы с данными факультетов.
  */
 @Tag(name = "Работа с данными факультетов")
 @RestController

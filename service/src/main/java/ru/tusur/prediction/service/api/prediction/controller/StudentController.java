@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +15,6 @@ import ru.tusur.prediction.service.api.prediction.dto.student.StudentResultsDto;
 import ru.tusur.prediction.service.api.prediction.mapper.StudentPredictionResultDtoMapper;
 import ru.tusur.prediction.service.core.onnx.OnnxService;
 
-// TODO В базе для пересдачи.
-// TODO Настроить отображение кодов ошибок в свагере.
 /**
  * Контроллер для работы с запросами предсказаний по студентам.
  */
@@ -31,7 +29,7 @@ public class StudentController {
 
     private final StudentPredictionResultDtoMapper studentPredictionResultDtoMapper;
 
-    @GetMapping
+    @PostMapping
     @Operation(description = "Возвращает средний балл ближайшей сессии")
     public StudentPredictionResultDto getPredictionForStudent(
             @Valid @RequestBody StudentResultsDto studentResults) {
