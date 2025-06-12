@@ -10,7 +10,10 @@ import ru.tusur.prediction.service.api.prediction.dto.result.StudentPredictionRe
 public interface StudentPredictionResultDtoMapper {
 
     /**
-     * Обертка {@link Integer} в {@link StudentPredictionResultDto}
+     * Обертка {@link Boolean} в {@link StudentPredictionResultDto}
+     *
+     * @param predictionResult результат предсказания модели.
+     * @return {@link StudentPredictionResultDto} с результатом предсказания.
      */
-    StudentPredictionResultDto map(Integer value);
+    StudentPredictionResultDto map(Boolean predictionResult);
 }

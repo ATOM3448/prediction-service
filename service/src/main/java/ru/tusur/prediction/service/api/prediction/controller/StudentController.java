@@ -14,7 +14,9 @@ import ru.tusur.prediction.service.api.prediction.dto.result.StudentPredictionRe
 import ru.tusur.prediction.service.api.prediction.dto.student.StudentResultsDto;
 import ru.tusur.prediction.service.api.prediction.mapper.StudentPredictionResultDtoMapper;
 import ru.tusur.prediction.service.core.onnx.OnnxService;
-// TODO В базе для пересдачи
+
+// TODO В базе для пересдачи.
+// TODO Настроить отображение кодов ошибок в свагере.
 /**
  * Контроллер для работы с запросами предсказаний по студентам.
  */

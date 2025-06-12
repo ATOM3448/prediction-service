@@ -6,7 +6,6 @@ import ai.onnxruntime.OrtSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-// TODO Добавить модель
 @Configuration
 public class OnnxConfiguration {
 
@@ -17,6 +16,6 @@ public class OnnxConfiguration {
 
     @Bean
     public OrtSession ortSession(OrtEnvironment env) throws OrtException {
-        return env.createSession("");
+        return env.createSession("service/src/main/resources/model_dynamic.onnx");
     }
 }

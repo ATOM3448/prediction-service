@@ -4,10 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Сущность, описывающая результаты предсказания среднего балла студента на ближайшей сессии.
+ * Сущность, описывающая результаты предсказания закроет студент сессию или нет.
  *
- * @param predictionResult Средний балл студента, округленный до целого.
+ * @param predictionResult Флаг обозначающий закрыл ли студент сессию.
  */
 public record StudentPredictionResultDto(
-        @Schema(description = "Средний балл студента, округленный до целого") @NotNull
-                Integer predictionResult) {}
+        @Schema(description = "Флаг обозначающий закрыл ли студент сессию") @NotNull
+                boolean predictionResult) {}

@@ -32,36 +32,33 @@ public class OnnxService {
      * @param studentResults Данные по успеваемости студента.
      * @return Средний балл, округленный до целого.
      */
-    public int predict(StudentResultsDto studentResults) {
-
-        float[][] inputData = getInputData(studentResults);
+    public boolean predict(StudentResultsDto studentResults) {
+        float[][][] inputData = convertToInputData(studentResults);
 
         try {
-
             OnnxTensor inputTensor = OnnxTensor.createTensor(ortEnvironment, inputData);
-
-            long[] shape = inputTensor.getInfo().getShape();
 
             log.info("Запрос предсказания у модели");
 
-            OnnxValue result =
-                    ortSession.run(Collections.singletonMap("input", inputTensor)).get(0);
+            float result =
+                    ((float[])
+                                    ortSession
+                                            .run(Collections.singletonMap("input", inputTensor))
+                                            .get(0)
+                                            .getValue())
+                            [0];
 
-            int averageResult = getIndexOfMax(result);
+            log.info("Модель вернула результат: [{}]", result);
 
-            if (averageResult != 0) {
-                averageResult++;
-            }
-
-            return averageResult;
+            return result > 3.0;
         } catch (OrtException exception) {
             throw new ServiceException(
                     ErrorCode.INTERNAL_ERROR, ErrorMessages.INTERNAL_ERROR_MESSAGE);
         }
     }
 
-    private static float[][] getInputData(StudentResultsDto studentResults) {
-        float[][] inputData = new float[SEQUENCE_LENGTH][FEATURE_SIZE];
+    private float[][][] convertToInputData(StudentResultsDto studentResults) {
+        float[][][] inputData = new float[1][SEQUENCE_LENGTH][FEATURE_SIZE];
 
         int semesterIndex = 0;
 
@@ -71,31 +68,31 @@ public class OnnxService {
             for (DisciplineResultsDto discipline : semester.disciplines()) {
                 int featureIndex = 0;
 
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.attendanceLectureFirstPeriod();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.attendanceLectureSecondPeriod();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.attendanceLectureThirdPeriod();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.attendancePracticeFirstPeriod();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.attendancePracticeSecondPeriod();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.attendancePracticeThirdPeriod();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.resultControlPointFirst();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex++] =
                         discipline.resultControlPointSecond();
-                inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                 featureIndex] =
                         discipline.resultSession();
 
@@ -104,7 +101,7 @@ public class OnnxService {
 
             for (; disciplineIndex < MAX_DISCIPLINES_COUNT_SUPPORTED; disciplineIndex++) {
                 for (int featureIndex = 0; featureIndex < FEATURE_SIZE; featureIndex++) {
-                    inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                    inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                     featureIndex] =
                             0.0f;
                 }
@@ -118,7 +115,7 @@ public class OnnxService {
                     disciplineIndex < MAX_DISCIPLINES_COUNT_SUPPORTED;
                     disciplineIndex++) {
                 for (int featureIndex = 0; featureIndex < FEATURE_SIZE; featureIndex++) {
-                    inputData[semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
+                    inputData[0][semesterIndex * MAX_DISCIPLINES_COUNT_SUPPORTED + disciplineIndex][
                                     featureIndex] =
                             0.0f;
                 }
@@ -126,23 +123,5 @@ public class OnnxService {
         }
 
         return inputData;
-    }
-
-    private static int getIndexOfMax(OnnxValue value) throws OrtException {
-        float[] predictionValue = (float[]) value.getValue();
-
-        int maxIndex = 0;
-        float maxValue = predictionValue[0];
-
-        for (int i = 1; i < predictionValue.length; i++) {
-            if (predictionValue[i] > maxValue) {
-                maxValue = predictionValue[i];
-                maxIndex = i;
-            }
-        }
-
-        log.info("Модель вернула предсказание [{}]", predictionValue);
-
-        return maxIndex;
     }
 }
