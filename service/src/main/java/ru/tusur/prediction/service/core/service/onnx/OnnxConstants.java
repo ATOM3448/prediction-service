@@ -1,4 +1,4 @@
-package ru.tusur.prediction.service.core.onnx;
+package ru.tusur.prediction.service.core.service.onnx;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

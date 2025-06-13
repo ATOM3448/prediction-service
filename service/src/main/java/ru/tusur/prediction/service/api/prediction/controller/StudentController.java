@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,9 @@ import ru.tusur.prediction.service.api.prediction.ApiPaths;
 import ru.tusur.prediction.service.api.prediction.dto.result.StudentPredictionResultDto;
 import ru.tusur.prediction.service.api.prediction.dto.student.StudentResultsDto;
 import ru.tusur.prediction.service.api.prediction.mapper.StudentPredictionResultDtoMapper;
-import ru.tusur.prediction.service.core.onnx.OnnxService;
+import ru.tusur.prediction.service.core.service.onnx.OnnxService;
+
+import static ru.tusur.prediction.service.api.AuthorityExpression.PREDICTION_AUTHORITY;
 
 /**
  * Контроллер для работы с запросами предсказаний по студентам.
@@ -23,6 +26,7 @@ import ru.tusur.prediction.service.core.onnx.OnnxService;
 @RequestMapping(ApiPaths.PREDICTION_API_STUDENT)
 @Validated
 @AllArgsConstructor
+@PreAuthorize(PREDICTION_AUTHORITY)
 public class StudentController {
 
     private final OnnxService mlService;

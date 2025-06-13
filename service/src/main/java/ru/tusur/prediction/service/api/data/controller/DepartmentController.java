@@ -11,7 +11,4 @@ import ru.tusur.prediction.service.api.data.ApiPaths;
 @Tag(name = "Работа с данными кафедр")
 @RestController
 @RequestMapping(ApiPaths.DATA_API_DEPARTMENT)
-public class DepartmentController {
-
-
-}
+public class DepartmentController {}

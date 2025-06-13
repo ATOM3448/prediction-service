@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OnnxConfiguration {
 
+    public static final String MODEL_PATH = "service/src/main/resources/model.onnx";
+
     @Bean
     public OrtEnvironment ortEnvironment() {
         return OrtEnvironment.getEnvironment();
@@ -16,6 +18,6 @@ public class OnnxConfiguration {
 
     @Bean
     public OrtSession ortSession(OrtEnvironment env) throws OrtException {
-        return env.createSession("service/src/main/resources/model_dynamic.onnx");
+        return env.createSession(MODEL_PATH);
     }
 }

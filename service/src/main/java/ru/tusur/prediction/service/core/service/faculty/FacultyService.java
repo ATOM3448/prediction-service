@@ -1,16 +1,18 @@
-package ru.tusur.prediction.service.core.faculty;
+package ru.tusur.prediction.service.core.service.faculty;
 
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.tusur.prediction.service.core.error.ErrorCode;
 import ru.tusur.prediction.service.core.error.ErrorMessages;
 import ru.tusur.prediction.service.core.error.ServiceException;
 import ru.tusur.prediction.service.core.model.faculty.Faculty;
 import ru.tusur.prediction.service.core.repository.FacultyRepository;
+
+import static ru.tusur.prediction.service.util.SecurityUtils.getOrganizationIdFromSecurityContext;
 
 /**
  * Сервис для работы с факультетами.
@@ -46,13 +48,32 @@ public class FacultyService {
             log.info(
                     "Данные по факультету \"{}\" для организации #{} сохранены",
                     name,
-                    organizationId);
+                    organizationId
+            );
         } catch (UnableToExecuteStatementException ex) {
             throw new ServiceException(ErrorCode.DUPLICATE, ErrorMessages.DUPLICATE_MESSAGE);
         }
     }
 
-    private static long getOrganizationIdFromSecurityContext() {
-        return (long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    /**
+     * Обновление в базе данных по факультету организации клиента.
+     *
+     * @param oldName Старое наименование факультета.
+     * @param newName Новое наименование факультета.
+     */
+    public void updateFaculty(String oldName, String newName) {
+        long organizationId = getOrganizationIdFromSecurityContext();
+
+        if (facultyRepository.updateFaculty(organizationId, oldName, newName) == 0) {
+            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, ErrorMessages.OBJECT_NOT_FOUND_MESSAGE);
+        }
+
+        log.info(
+                "Данные по факультету \"{}\" для организации #{} обновлены на \"{}\"",
+                oldName,
+                organizationId,
+                newName
+        );
     }
+
 }

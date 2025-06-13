@@ -26,5 +26,4 @@ public final class ApiPaths {
     public static final String DATA_API_STUDENT = DATA_API + "/student";
 
     public static final String DATA_API_RESULT = DATA_API + "/result";
-
 }

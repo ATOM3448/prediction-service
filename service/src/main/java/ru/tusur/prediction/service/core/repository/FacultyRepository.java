@@ -43,5 +43,28 @@ public interface FacultyRepository {
             insert into faculty (organization_id, name)
             values (:organizationId, :name);
             """)
-    void saveFaculty(@Bind("organizationId") long organizationId, @Bind("name") String name);
+    void saveFaculty(
+            @Bind("organizationId") long organizationId,
+            @Bind("name") String name
+    );
+
+    /**
+     * Обновляет данные по факультету.
+     *
+     * @param organizationId Идентификатор организации.
+     * @param oldName Старое наименование факультета.
+     * @param newName Новое наименование факультета.
+     */
+    @SqlUpdate(
+            """
+            update faculty
+            set name = :newName
+            where name = :oldName;
+            """
+    )
+    int updateFaculty(
+            @Bind("organizationId") long organizationId,
+            @Bind("oldName") String oldName,
+            @Bind("newName") String newName
+    );
 }

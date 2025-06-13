@@ -1,11 +1,16 @@
 package ru.tusur.prediction.service.api.security.apikey;
 
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import ru.tusur.prediction.service.api.security.apikey.model.apikey.ApiKey;
 import ru.tusur.prediction.service.core.repository.ApiKeyRepository;
 
@@ -19,15 +24,18 @@ public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) {
-        if (authentication instanceof ApiKey apiKey) {
-            Optional<Long> organization =
-                    apiKeyRepository.getOrganizationByApiKey((String) apiKey.getCredentials());
+        if (authentication instanceof ApiKey notVerifiedApiKey) {
+            ru.tusur.prediction.service.core.model.apikey.ApiKey verifiedApiKey = verifyApiKey(
+                    (String) notVerifiedApiKey.getCredentials(),
+                    apiKeyRepository.getApiKeysByPrefix(notVerifiedApiKey.getPrefix())
+            );
 
-            if (organization.isEmpty()) {
-                throw new BadCredentialsException("Некорректный API-ключ");
-            }
+            List<GrantedAuthority> authorities = apiKeyRepository.getScopesByApiKey(verifiedApiKey.getId()).stream()
+                            .map(SimpleGrantedAuthority::new)
+                            .map(GrantedAuthority.class::cast)
+                            .toList();
 
-            ApiKey trustedApiKey = new ApiKey((String) apiKey.getCredentials(), organization.get());
+            ApiKey trustedApiKey = new ApiKey(verifiedApiKey.getOrganizationId(), authorities);
 
             SecurityContextHolder.getContext().setAuthentication(trustedApiKey);
 
@@ -40,5 +48,22 @@ public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> authentication) {
         return ApiKey.class.isAssignableFrom(authentication);
+    }
+
+    private ru.tusur.prediction.service.core.model.apikey.ApiKey verifyApiKey(
+            String notVerifiedApiKey,
+            List<ru.tusur.prediction.service.core.model.apikey.ApiKey> apiKeys
+    ) {
+        for (ru.tusur.prediction.service.core.model.apikey.ApiKey apiKey : apiKeys) {
+            if (BCrypt.checkpw(notVerifiedApiKey, apiKey.getHash())) {
+                if (apiKey.getExpired().isBefore(LocalDate.now())) {
+                    throw new CredentialsExpiredException("API ключ истек");
+                }
+
+                return apiKey;
+            }
+        }
+
+        throw new BadCredentialsException("Некорректный API-ключ");
     }
 }
