@@ -3,9 +3,6 @@ package ru.tusur.prediction.service.core.error;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Перечисление возможных кодов ошибки.
- */
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {

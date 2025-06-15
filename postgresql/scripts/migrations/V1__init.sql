@@ -12,20 +12,13 @@ create table if not exists student
 (
     id                          bigserial           primary key,
     organization_id             bigint              not null,
-    local_id                    varchar(32)         not null,
 
-    constraint student_organization_fk foreign key (organization_id) references organization (id),
-
-    constraint student_organization_id_local_id_combination unique (organization_id, local_id)
+    constraint student_organization_fk foreign key (organization_id) references organization (id)
 );
-
-create index if not exists student_local_id_idx on student(local_id);
-create index if not exists student_organization_id_idx on student(organization_id);
 
 comment on table student is 'Студент';
 comment on column student.id is 'Идентификатор';
 comment on column student.organization_id is 'Идентификатор организации';
-comment on column student.local_id is 'Идентификатор, используемый на стороне клиента';
 
 create table if not exists api_key
 (
@@ -82,9 +75,6 @@ create table if not exists faculty
     constraint faculty_organization_id_name_combination unique (organization_id, name)
 );
 
-create index if not exists faculty_organization_id_idx on faculty(organization_id);
-create index if not exists faculty_name_idx on faculty(name);
-
 comment on table faculty is 'Факультет';
 comment on column faculty.organization_id is 'Идентификатор организации';
 comment on column faculty.name is 'Наименование';
@@ -100,35 +90,94 @@ create table if not exists department
     constraint department_faculty_id_name_combination unique (faculty_id, name)
 );
 
-create index if not exists department_faculty_id_idx on department(faculty_id);
-create index if not exists department_name_idx on department(name);
-
 comment on table department is 'Кафедра';
 comment on column department.faculty_id is 'Идентификатор факультета';
 comment on column department.name is 'Наименование';
 
-create table if not exists student_group
+create table if not exists program
+(
+    id                          bigserial           primary key,
+    organization_id             bigint              not null,
+    code                        varchar(32)         not null,
+    name                        varchar(128)        not null,
+
+    constraint program_organization_fk foreign key (organization_id) references organization (id),
+
+    constraint program_organization_id_code_combination unique (organization_id, code),
+    constraint program_organization_id_name_combination unique (organization_id, name)
+);
+
+comment on table program is 'Программа обучения';
+comment on column program.id is 'Идентификатор';
+comment on column program.organization_id is 'Идентификатор организации';
+comment on column program.code is 'Код';
+comment on column program.name is 'Наименование';
+
+create table if not exists profile
 (
     id                          bigserial           primary key,
     department_id               bigint              not null,
+    program_id                  bigint              not null,
+    name                        varchar(128)        not null,
+
+    constraint profile_department_fk foreign key (department_id) references department (id),
+    constraint profile_program_fk foreign key (program_id) references program (id),
+
+    constraint profile_program_id_name_combination unique (program_id, name)
+);
+
+comment on table profile is 'Профиль обучения';
+comment on column profile.id is 'Идентификатор';
+comment on column profile.department_id is 'Идентификатор кафедры';
+comment on column profile.program_id is 'Идентификатор программы';
+comment on column profile.name is 'Наименование';
+
+create table if not exists student_group
+(
+    id                          bigserial           primary key,
+    profile_id                  bigint              not null,
     name                        varchar(32)         not null,
     general_enrollment          date                not null,
     planed_expulsion            date                not null,
 
-    constraint student_group_department_fk foreign key (department_id) references department (id),
-
-    constraint student_group_department_id_name_combination unique (department_id, name)
+    constraint student_group_profile_fk foreign key (profile_id) references profile (id)
 );
-
-create index if not exists student_group_department_id_idx on student_group(department_id);
-create index if not exists student_group_name_idx on student_group(name);
 
 comment on table student_group is 'Группа студентов';
 comment on column student_group.id is 'Идентификатор';
-comment on column student_group.department_id is 'Идентификатор кафедры';
-comment on column student_group.name is 'Наиименование';
+comment on column student_group.profile_id is 'Идентификатор профиля обучения';
+comment on column student_group.name is 'Наименование';
 comment on column student_group.general_enrollment is 'Общая дата зачисления';
 comment on column student_group.planed_expulsion is 'Планируемая дата выпуска';
+
+create or replace function check_unique_student_group()
+returns trigger as $$
+begin
+    if exists (
+        select 1
+        from student_group sg
+        join profile prof on sg.profile_id = prof.id
+        join program prog on prof.program_id = prog.id
+        join organization o on prog.organization_id = o.id
+        where sg.name = new.name
+            and o.id = (
+                select organization_id from program where id = (
+                    select program_id from profile where id = new.profile_id
+                )
+            )
+    ) then
+        raise exception 'группа % уже существует в данной организации!', new.name;
+    end if;
+
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger student_group_unique_trigger
+before insert or update on student_group
+for each row
+execute function check_unique_student_group();
+
 
 create table if not exists student_group_member
 (
@@ -149,48 +198,6 @@ comment on column student_group_member.student_group_id is 'Идентифика
 comment on column student_group_member.enrollment is 'Дата зачисления';
 comment on column student_group_member.expulsion is 'Дата отчисления';
 
-create table if not exists program
-(
-    id                          bigserial           primary key,
-    organization_id             bigint              not null,
-    code                        varchar(32)         not null,
-    name                        varchar(128)        not null,
-
-    constraint program_organization_fk foreign key (organization_id) references organization (id),
-
-    constraint program_organization_id_code_combination unique (organization_id, code),
-    constraint program_organization_id_name_combination unique (organization_id, name)
-);
-
-create index if not exists program_organization_id_idx on program(organization_id);
-create index if not exists program_code_idx on program(code);
-create index if not exists program_name_idx on program(name);
-
-comment on table program is 'Программа обучения';
-comment on column program.id is 'Идентификатор';
-comment on column program.organization_id is 'Идентификатор организации';
-comment on column program.code is 'Код';
-comment on column program.name is 'Наименование';
-
-create table if not exists profile
-(
-    id                          bigserial           primary key,
-    program_id                  bigint              not null,
-    name                        varchar(128)        not null,
-
-    constraint profile_program_fk foreign key (program_id) references program (id),
-
-    constraint profile_program_id_name_combination unique (program_id, name)
-);
-
-create index if not exists profile_program_id_idx on profile(program_id);
-create index if not exists profile_name_idx on profile(name);
-
-comment on table profile is 'Профиль обучения';
-comment on column profile.id is 'Идентификатор';
-comment on column profile.program_id is 'Идентификатор программы';
-comment on column profile.name is 'Наименование';
-
 create table if not exists discipline
 (
     id                          bigserial           primary key,
@@ -202,9 +209,6 @@ create table if not exists discipline
     constraint discipline_organization_id_name_combination unique (organization_id, name)
 );
 
-create index if not exists discipline_organization_id_idx on discipline(organization_id);
-create index if not exists discipline_name_idx on discipline(name);
-
 comment on table discipline is 'Дисциплина';
 comment on column discipline.id is 'Идентификатор';
 comment on column discipline.organization_id is 'Идентификатор организации';
@@ -213,81 +217,61 @@ comment on column discipline.name is 'Наименование';
 create table if not exists teacher
 (
     id                          bigserial           primary key,
-    organization_id             bigint              not null,
-    local_id                    varchar(32)         not null,
+    department_id               bigint              not null,
 
-    constraint teacher_organization_fk foreign key (organization_id) references organization (id),
-
-    constraint teacher_organization_id_local_id_combination unique (organization_id, local_id)
+    constraint teacher_department_fk foreign key (department_id) references department (id)
 );
-
-create index if not exists teacher_organization_id_idx on teacher(organization_id);
-create index if not exists teacher_local_id_idx on teacher(local_id);
 
 comment on table teacher is 'Преподаватель';
 comment on column teacher.id is 'Идентификатор';
-comment on column teacher.organization_id is 'Идентификатор организации';
-comment on column teacher.local_id is 'Идентификатор, используемый на стороне клиента';
+comment on column teacher.department_id is 'Идентификатор кафедры, на которой устроен преподаватель';
 
 create table if not exists discipline_cource
 (
     id                          bigserial           primary key,
-    department_id               bigint              not null,
     profile_id                  bigint              not null,
     discipline_id               bigint              not null,
     teacher_id                  bigint              not null,
     semester                    int                 not null,
 
-    constraint discipline_cource_department_fk foreign key (department_id) references department (id),
     constraint discipline_cource_profile_fk foreign key (profile_id) references profile (id),
     constraint discipline_cource_discipline_fk foreign key (discipline_id) references discipline (id),
     constraint discipline_cource_teacher_fk foreign key (teacher_id) references teacher (id),
 
-    constraint discipline_cource_department_id_discipline_id_teacher_id_semester_combination unique (department_id, profile_id, discipline_id, teacher_id, semester)
+    constraint discipline_cource_department_id_discipline_id_teacher_id_semester_combination unique (profile_id, discipline_id, teacher_id, semester)
 );
-
-create index if not exists discipline_cource_department_id_idx on discipline_cource(department_id);
-create index if not exists discipline_cource_profile_id_idx on discipline_cource(profile_id);
-create index if not exists discipline_cource_discipline_id_idx on discipline_cource(discipline_id);
-create index if not exists discipline_cource_teacher_id_idx on discipline_cource(teacher_id);
-create index if not exists discipline_cource_semester_idx on discipline_cource(semester);
 
 comment on table discipline_cource is 'Курс дисциплины';
 comment on column discipline_cource.id is 'Идентификатор';
-comment on column discipline_cource.department_id is 'Идентификатор кафедры, предоставляющая преподавателя';
+comment on column discipline_cource.profile_id is 'Идентификатор профиля, в рамках которого прохожит курс';
 comment on column discipline_cource.discipline_id is 'Идентификатор дисциплины';
 comment on column discipline_cource.teacher_id is 'Идентификатор преподавателя';
 comment on column discipline_cource.semester is 'Семестр, на котором проходит курс';
-
-create type indicator_type as enum (
-    'ATTENDANCE_LECTURE_FISRT_PERIOD',
-    'ATTENDANCE_LECTURE_SECOND_PERIOD',
-    'ATTENDANCE_LECTURE_THIRD_PERIOD',
-    'ATTENDANCE_PRACTICE_FISRT_PERIOD',
-    'ATTENDANCE_PRACTICE_SECOND_PERIOD',
-    'ATTENDANCE_PRACTICE_THIRD_PERIOD',
-    'RESULT_CONTROL_POINT_FIRST',
-    'RESULT_CONTROL_POINT_SECOND',
-    'RESULT_SESSION'
-);
-
-comment on type scope_type is 'Список типов индикатора';
 
 create table if not exists indicator
 (
     id                          bigserial           primary key,
     organization_id             bigint              not null,
-    type                        indicator_type      not null,
+    type                        varchar(128)        not null,
     name                        varchar(128)        not null,
     max_value                   int                 not null,
 
     constraint indicator_organization_fk foreign key (organization_id) references organization (id),
 
-    constraint indicator_type_name_combination unique (type, name)
-);
+    constraint indicator_type_name_combination unique (type, name),
 
-create index if not exists indicator_organization_id_idx on indicator(organization_id);
-create index if not exists indicator_type_idx on indicator(type);
+    constraint indicator_type_check check (type in (
+        'ATTENDANCE_LECTURE_FIRST_PERIOD',
+        'ATTENDANCE_LECTURE_SECOND_PERIOD',
+        'ATTENDANCE_LECTURE_THIRD_PERIOD',
+        'ATTENDANCE_PRACTICE_FIRST_PERIOD',
+        'ATTENDANCE_PRACTICE_SECOND_PERIOD',
+        'ATTENDANCE_PRACTICE_THIRD_PERIOD',
+        'RESULT_CONTROL_POINT_FIRST',
+        'RESULT_CONTROL_POINT_SECOND',
+        'RESULT_SESSION'
+    ))
+);
 
 comment on table indicator is 'Индикатор прогресса обучения студента';
 comment on column indicator.id is 'Идентификатор';
@@ -313,10 +297,6 @@ create table if not exists result
 
     constraint result_indicator_student_date_combination unique (indicator_id, student_id, date)
 );
-
-create index if not exists result_discipline_cource_id_idx on result(discipline_cource_id);
-create index if not exists result_indicator_id_idx on result(indicator_id);
-create index if not exists result_student_id_idx on result(student_id);
 
 comment on table result is 'Результат';
 comment on column result.id is 'Идентификатор';

@@ -4,9 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
-/**
- * Входная точка в приложение.
- */
 @SpringBootApplication
 @ConfigurationPropertiesScan("ru.tusur.prediction.service.configuration")
 public class Application {

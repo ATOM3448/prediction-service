@@ -4,9 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-/**
- * Базовый класс для различных типов исключений, вызываемых методами сервисов.
- */
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

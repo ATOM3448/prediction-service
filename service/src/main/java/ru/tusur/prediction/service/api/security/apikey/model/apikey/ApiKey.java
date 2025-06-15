@@ -6,9 +6,6 @@ import lombok.Getter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
-/**
- * Класс представляет собой Api Key, выданный клиенту.
- */
 @EqualsAndHashCode(callSuper = false)
 public class ApiKey extends AbstractAuthenticationToken {
 

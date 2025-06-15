@@ -1,13 +1,15 @@
 package ru.tusur.prediction.service.core.error;
 
-import static ru.tusur.prediction.service.core.error.ErrorMessages.*;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/**
- * Сервис для работы с сообщениями об ошибках.
- */
+import static ru.tusur.prediction.service.core.error.ErrorMessages.ACCESS_DENIED_MESSAGE;
+import static ru.tusur.prediction.service.core.error.ErrorMessages.DUPLICATE_MESSAGE;
+import static ru.tusur.prediction.service.core.error.ErrorMessages.INTERNAL_ERROR_MESSAGE;
+import static ru.tusur.prediction.service.core.error.ErrorMessages.INVALID_ARGUMENT_MESSAGE;
+import static ru.tusur.prediction.service.core.error.ErrorMessages.OBJECT_NOT_FOUND_MESSAGE;
+import static ru.tusur.prediction.service.core.error.ErrorMessages.UNAUTHORIZED_MESSAGE;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorMessageResolver {
 

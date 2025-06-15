@@ -1,15 +1,15 @@
 package ru.tusur.prediction.service.core.service.onnx;
 
-import static ru.tusur.prediction.service.core.service.onnx.OnnxConstants.*;
-
-import ai.onnxruntime.*;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import ai.onnxruntime.OnnxTensor;
+import ai.onnxruntime.OrtEnvironment;
+import ai.onnxruntime.OrtException;
+import ai.onnxruntime.OrtSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,11 @@ import ru.tusur.prediction.service.core.error.ErrorCode;
 import ru.tusur.prediction.service.core.error.ErrorMessages;
 import ru.tusur.prediction.service.core.error.ServiceException;
 
-/**
- * Сервис для работы с мл-моделью.
- */
+import static ru.tusur.prediction.service.core.service.onnx.OnnxConstants.FEATURE_SIZE;
+import static ru.tusur.prediction.service.core.service.onnx.OnnxConstants.MAX_DISCIPLINES_COUNT_SUPPORTED;
+import static ru.tusur.prediction.service.core.service.onnx.OnnxConstants.MAX_SEMESTERS_COUNT_SUPPORTED;
+import static ru.tusur.prediction.service.core.service.onnx.OnnxConstants.SEQUENCE_LENGTH;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -32,12 +34,6 @@ public class OnnxService {
 
     OrtSession ortSession;
 
-    /**
-     * Возвращает средний балл на ближайшей сессии студента.
-     *
-     * @param studentResults Данные по успеваемости студента.
-     * @return Средний балл, округленный до целого.
-     */
     public boolean predict(StudentResultsDto studentResults) {
         float[][][] inputData = convertToInputData(studentResults);
 

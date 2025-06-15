@@ -3,9 +3,6 @@ package ru.tusur.prediction.service.core.service.onnx;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/**
- * Список констант, необходимых при работе с моделью
- */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OnnxConstants {
 

@@ -3,9 +3,6 @@ package ru.tusur.prediction.service.api.prediction;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/**
- * URL-адреса для работы с моделью напрямую.
- */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiPaths {
 

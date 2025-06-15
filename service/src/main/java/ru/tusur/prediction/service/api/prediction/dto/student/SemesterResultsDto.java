@@ -6,11 +6,6 @@ import jakarta.validation.constraints.Size;
 import java.util.List;
 import ru.tusur.prediction.service.core.service.onnx.OnnxConstants;
 
-/**
- * Сущность, описывающая данные успеваемости за семестр.
- *
- * @param disciplines Данные успеваемости по дисциплинам.
- */
 @Schema(description = "Сущность, описывающая данные успеваемости за семестр", name = "Semester")
 public record SemesterResultsDto(
         @Schema(description = "Данные успеваемости по дисциплинам")

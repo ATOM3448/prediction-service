@@ -14,9 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import ru.tusur.prediction.service.api.security.apikey.model.apikey.ApiKey;
 import ru.tusur.prediction.service.core.repository.ApiKeyRepository;
 
-/**
- * Класс производит аутентификацию, основанную на Api Key, затем заполняет контекст.
- */
 @RequiredArgsConstructor
 public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
 
@@ -30,12 +27,12 @@ public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
                     apiKeyRepository.getApiKeysByPrefix(notVerifiedApiKey.getPrefix())
             );
 
-            List<GrantedAuthority> authorities = apiKeyRepository.getScopesByApiKey(verifiedApiKey.getId()).stream()
+            List<GrantedAuthority> authorities = apiKeyRepository.getScopesByApiKey(verifiedApiKey.id()).stream()
                             .map(SimpleGrantedAuthority::new)
                             .map(GrantedAuthority.class::cast)
                             .toList();
 
-            ApiKey trustedApiKey = new ApiKey(verifiedApiKey.getOrganizationId(), authorities);
+            ApiKey trustedApiKey = new ApiKey(verifiedApiKey.organizationId(), authorities);
 
             SecurityContextHolder.getContext().setAuthentication(trustedApiKey);
 
@@ -55,8 +52,8 @@ public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
             List<ru.tusur.prediction.service.core.model.apikey.ApiKey> apiKeys
     ) {
         for (ru.tusur.prediction.service.core.model.apikey.ApiKey apiKey : apiKeys) {
-            if (BCrypt.checkpw(notVerifiedApiKey, apiKey.getHash())) {
-                if (apiKey.getExpired().isBefore(LocalDate.now())) {
+            if (BCrypt.checkpw(notVerifiedApiKey, apiKey.hash())) {
+                if (apiKey.expired().isBefore(LocalDate.now())) {
                     throw new CredentialsExpiredException("API ключ истек");
                 }
 

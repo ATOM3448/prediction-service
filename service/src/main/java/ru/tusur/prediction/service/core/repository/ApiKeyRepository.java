@@ -8,19 +8,10 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tusur.prediction.service.core.model.apikey.ApiKey;
 
-/**
- * Интерфейс для работы с Api Key.
- */
 @Transactional(readOnly = true)
 @RegisterConstructorMapper(ApiKey.class)
 public interface ApiKeyRepository {
 
-    /**
-     * Возвращает возможные API ключи по префиксу.
-     *
-     * @param prefix Префикс API ключа.
-     * @return API ключи.
-     */
     @SqlQuery(
             """
             select *
@@ -29,12 +20,6 @@ public interface ApiKeyRepository {
             """)
     List<ApiKey> getApiKeysByPrefix(@Bind("prefix") String prefix);
 
-    /**
-     * Возвращает разрешения доступные под переданным ключом.
-     *
-     * @param apiKey Идентификатор API ключа.
-     * @return Список разрешений.
-     */
     @SqlQuery(
             """
             select type

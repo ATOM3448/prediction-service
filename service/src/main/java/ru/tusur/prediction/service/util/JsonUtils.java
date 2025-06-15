@@ -24,9 +24,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.ResourceUtils;
 import ru.tusur.prediction.service.core.error.ServiceException;
 
-/**
- * Методы для работы с форматом json.
- */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonUtils {
 

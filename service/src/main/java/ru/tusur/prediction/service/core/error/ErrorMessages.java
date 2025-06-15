@@ -3,9 +3,6 @@ package ru.tusur.prediction.service.core.error;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/**
- * Класс для default error сообщений.
- */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorMessages {
 

@@ -6,9 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import ru.tusur.prediction.service.api.security.apikey.model.apikey.ApiKey;
 
-/**
- * Класс реализующий извлечение {@link Authentication} из заголовка авторизации.
- */
 public class ApiKeyAuthenticationConverter implements AuthenticationConverter {
 
     private static final String PREFIX_AND_API_KEY_SPLITTER = "\\.";

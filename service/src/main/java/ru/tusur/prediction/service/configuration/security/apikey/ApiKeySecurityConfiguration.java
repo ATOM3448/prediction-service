@@ -53,12 +53,11 @@ public class ApiKeySecurityConfiguration {
                     .httpBasic(AbstractHttpConfigurer::disable)
                     .logout(AbstractHttpConfigurer::disable)
                     .csrf(AbstractHttpConfigurer::disable)
-                    .sessionManagement(
-                            session ->
-                                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                    .sessionManagement(session -> session
+                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    );
 
-            AuthenticationManager authenticationManager =
-                    new ProviderManager(apiKeyAuthenticationProvider);
+            AuthenticationManager authenticationManager = new ProviderManager(apiKeyAuthenticationProvider);
 
             AuthenticationFilter authenticationFilter =
                     new AuthenticationFilter(authenticationManager, apiKeyAuthenticationConverter);
@@ -69,16 +68,19 @@ public class ApiKeySecurityConfiguration {
             httpSecurity
                     .addFilterAt(authenticationFilter, BasicAuthenticationFilter.class)
                     .authorizeHttpRequests(
-                            authorize ->
-                                    authorize
-                                            .requestMatchers("/v3/**", "/swagger-ui/**")
-                                            .permitAll()
-                                            .anyRequest()
-                                            .authenticated())
+                            authorize -> authorize
+                                    .requestMatchers(
+                                            "/v3/api-docs/**",
+                                            "/swagger-ui/**",
+                                            "/swagger-ui.html"
+                                    ).permitAll()
+                                    .anyRequest().authenticated()
+                    )
                     .exceptionHandling(
-                            exceptionHandling ->
-                                    exceptionHandling.authenticationEntryPoint(
-                                            authenticationEntryPoint));
+                            exceptionHandling -> exceptionHandling
+                                    .authenticationEntryPoint(authenticationEntryPoint)
+                    )
+            ;
             return httpSecurity.build();
         }
     }
@@ -89,8 +91,7 @@ public class ApiKeySecurityConfiguration {
     }
 
     @Bean
-    public ApiKeyAuthenticationProvider apiKeyAuthenticationProvider(
-            ApiKeyRepository apiKeyRepository) {
+    public ApiKeyAuthenticationProvider apiKeyAuthenticationProvider(ApiKeyRepository apiKeyRepository) {
         return new ApiKeyAuthenticationProvider(apiKeyRepository);
     }
 }

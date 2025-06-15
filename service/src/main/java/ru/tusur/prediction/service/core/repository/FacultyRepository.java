@@ -8,63 +8,51 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tusur.prediction.service.core.model.faculty.Faculty;
 
-/**
- * Интерфейс для управления объектами {@link Faculty}.
- */
 @Transactional
 @RegisterConstructorMapper(Faculty.class)
 public interface FacultyRepository {
 
-    /**
-     * Возвращает список факультетов организации.
-     *
-     * @param organizationId Идентификатор организации.
-     * @return Список факультетов.
-     */
     @SqlQuery(
             """
-            select
-                id,
-                organization_id,
-                name
+            select *
             from faculty
-            where organization_id = :organizationId;
+            where organization_id = :organizationId
+            order by id;
             """)
     List<Faculty> getFacultiesByOrganizationId(@Bind("organizationId") long organizationId);
 
-    /**
-     * Сохраняет данные по факультету.
-     *
-     * @param organizationId Идентификатор организации.
-     * @param name Наименование факультета.
-     */
-    @SqlUpdate(
+    @SqlQuery(
+            """
+            select *
+            from faculty
+            where id = :id;
+            """
+    )
+    Faculty getFacultyById(
+            @Bind("id") long id
+    );
+
+    @SqlQuery(
             """
             insert into faculty (organization_id, name)
-            values (:organizationId, :name);
-            """)
-    void saveFaculty(
+            values (:organizationId, :name)
+            returning *;
+            """
+    )
+    Faculty saveFaculty(
             @Bind("organizationId") long organizationId,
             @Bind("name") String name
     );
 
-    /**
-     * Обновляет данные по факультету.
-     *
-     * @param organizationId Идентификатор организации.
-     * @param oldName Старое наименование факультета.
-     * @param newName Новое наименование факультета.
-     */
     @SqlUpdate(
             """
             update faculty
-            set name = :newName
-            where name = :oldName;
+            set name = :name
+            where id = :id;
             """
     )
-    int updateFaculty(
-            @Bind("organizationId") long organizationId,
-            @Bind("oldName") String oldName,
-            @Bind("newName") String newName
+    void updateFaculty(
+            @Bind("id") long id,
+            @Bind("name") String name
     );
 }

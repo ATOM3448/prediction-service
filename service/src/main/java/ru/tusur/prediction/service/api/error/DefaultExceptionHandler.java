@@ -1,6 +1,8 @@
 package ru.tusur.prediction.service.api.error;
 
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,9 +26,8 @@ import ru.tusur.prediction.service.core.error.ErrorCode;
 import ru.tusur.prediction.service.core.error.ErrorMessageResolver;
 import ru.tusur.prediction.service.core.error.ServiceException;
 
-/**
- * Базовый класс для обработки исключений API.
- */
+import java.sql.SQLException;
+
 @Slf4j
 @RestControllerAdvice
 public class DefaultExceptionHandler {
@@ -56,6 +57,12 @@ public class DefaultExceptionHandler {
         if (exception instanceof HttpMediaTypeNotSupportedException) {
             return HttpStatus.UNSUPPORTED_MEDIA_TYPE;
         }
+        if (exception instanceof HttpMessageNotReadableException) {
+            return HttpStatus.BAD_REQUEST;
+        }
+        if (exception instanceof ConstraintViolationException) {
+            return HttpStatus.BAD_REQUEST;
+        }
         if (exception instanceof ServletRequestBindingException) {
             return HttpStatus.BAD_REQUEST;
         }
@@ -74,11 +81,24 @@ public class DefaultExceptionHandler {
         if (exception instanceof MethodArgumentNotValidException) {
             return HttpStatus.BAD_REQUEST;
         }
+        if (exception instanceof UnableToExecuteStatementException unableToExecuteStatementException) {
+            return getHttpStatus(unableToExecuteStatementException);
+        }
         if (exception instanceof ServiceException serviceException) {
             return getHttpStatus(serviceException);
         }
 
         return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+
+    private HttpStatus getHttpStatus(UnableToExecuteStatementException exception) {
+        String sqlState = ((SQLException) exception.getCause()).getSQLState();
+
+        return switch (sqlState) {
+            case "23505" -> HttpStatus.CONFLICT;
+            case "23514" -> HttpStatus.BAD_REQUEST;
+            default -> HttpStatus.INTERNAL_SERVER_ERROR;
+        };
     }
 
     private HttpStatus getHttpStatus(ServiceException exception) {
@@ -98,7 +118,9 @@ public class DefaultExceptionHandler {
                 || exception instanceof HttpRequestMethodNotSupportedException
                 || exception instanceof HttpMediaTypeNotAcceptableException
                 || exception instanceof HttpMediaTypeNotSupportedException
-                || exception instanceof HttpMessageNotReadableException) {
+                || exception instanceof HttpMessageNotReadableException
+                || exception instanceof ConstraintViolationException
+        ) {
             return null;
         }
         if (exception instanceof AccessDeniedException) {
@@ -113,6 +135,15 @@ public class DefaultExceptionHandler {
             return buildError(ErrorCode.INVALID_ARGUMENT);
         }
         if (exception instanceof ServletRequestBindingException) {
+            return null;
+        }
+        if (exception instanceof UnableToExecuteStatementException unableToExecuteStatementException) {
+            String sqlState = ((SQLException) unableToExecuteStatementException.getCause()).getSQLState();
+
+            if (sqlState.equals("23505")) {
+                return buildError(ErrorCode.DUPLICATE);
+            }
+
             return null;
         }
         if (exception instanceof ServiceException serviceException) {

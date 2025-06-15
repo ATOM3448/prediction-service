@@ -7,9 +7,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-/**
- * Конфигурация security бинов.
- */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfiguration {
