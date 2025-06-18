@@ -3,7 +3,6 @@ package ru.tusur.prediction.service.core.repository;
 import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tusur.prediction.service.core.model.discipline.Discipline;
 import ru.tusur.prediction.service.core.model.discipline.Discipline;
@@ -46,14 +45,15 @@ public interface DisciplineRepository {
             @Bind("name") String name
     );
 
-    @SqlUpdate(
+    @SqlQuery(
             """
             update discipline
             set name = :name
-            where id = :id;
+            where id = :id
+            returning *;
             """
     )
-    void updateDiscipline(
+    Discipline updateDiscipline(
             @Bind("id") long id,
             @Bind("name") String name
     );

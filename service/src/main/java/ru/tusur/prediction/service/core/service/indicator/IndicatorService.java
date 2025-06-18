@@ -33,13 +33,14 @@ public class IndicatorService {
     public Indicator getIndicator(long id) {
         Indicator indicator = indicatorRepository.getIndicatorById(id);
 
-        if ((indicator == null) || !validateAccessByOrganizationId(indicator.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfIndicator(indicator);
 
         return indicator;
     }
 
+    public Indicator getIndicatorByIdNotProtected(long id) {
+        return indicatorRepository.getIndicatorById(id);
+    }
 
     public Indicator saveIndicator(UpdateIndicatorDto indicator) {
         long organizationId = getOrganizationIdFromSecurityContext();
@@ -62,9 +63,7 @@ public class IndicatorService {
     public void updateIndicator(long indicatorId, UpdateIndicatorDto newIndicator) {
         Indicator oldIndicator = indicatorRepository.getIndicatorById(indicatorId);
 
-        if ((oldIndicator == null) || !validateAccessByOrganizationId(oldIndicator.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfIndicator(oldIndicator);
 
         IndicatorTypeDto type = newIndicator.type();
         String name = newIndicator.name();
@@ -77,5 +76,11 @@ public class IndicatorService {
                 indicatorId,
                 name
         );
+    }
+
+    private void checkExistenceOfIndicator(Indicator indicator) {
+        if ((indicator == null) || !validateAccessByOrganizationId(indicator.organizationId())) {
+            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
+        }
     }
 }

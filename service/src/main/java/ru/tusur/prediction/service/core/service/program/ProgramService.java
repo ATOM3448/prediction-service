@@ -31,9 +31,7 @@ public class ProgramService {
     public Program getProgram(long id) {
         Program program = programRepository.getProgramById(id);
 
-        if ((program == null) || !validateAccessByOrganizationId(program.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfProgram(program);
 
         return program;
     }
@@ -54,23 +52,29 @@ public class ProgramService {
         return savedProgram;
     }
 
-    public void updateProgram(long programId, UpdateProgramDto newProgram) {
+    public Program updateProgram(long programId, UpdateProgramDto newProgram) {
         Program oldProgram = programRepository.getProgramById(programId);
 
-        if ((oldProgram == null) || !validateAccessByOrganizationId(oldProgram.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfProgram(oldProgram);
 
         String newCode = newProgram.code();
         String newName = newProgram.name();
 
-        programRepository.updateProgram(programId, newCode, newName);
+        Program updatedProgram =  programRepository.updateProgram(programId, newCode, newName);
 
         log.info(
                 "Данные по программе #{} обновлены на \"{}\"",
                 programId,
                 newName
         );
+
+        return updatedProgram;
+    }
+
+    private void checkExistenceOfProgram(Program program) {
+        if ((program == null) || !validateAccessByOrganizationId(program.organizationId())) {
+            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
+        }
     }
 
 }

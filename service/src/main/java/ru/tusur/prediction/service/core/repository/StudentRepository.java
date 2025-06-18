@@ -24,10 +24,20 @@ public interface StudentRepository {
 
     @SqlQuery(
             """
+            select *
+            from student
+            where id = :id;
+            """
+    )
+    Student getStudentById(@Bind("id") long id);
+
+    @SqlQuery(
+            """
             insert into student (organization_id)
             values (:organizationId)
             returning *;
             """
     )
     Student saveStudent(@Bind("organizationId") long organizationId);
+
 }

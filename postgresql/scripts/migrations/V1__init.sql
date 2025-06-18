@@ -226,7 +226,7 @@ comment on table teacher is 'Преподаватель';
 comment on column teacher.id is 'Идентификатор';
 comment on column teacher.department_id is 'Идентификатор кафедры, на которой устроен преподаватель';
 
-create table if not exists discipline_cource
+create table if not exists discipline_course
 (
     id                          bigserial           primary key,
     profile_id                  bigint              not null,
@@ -234,19 +234,19 @@ create table if not exists discipline_cource
     teacher_id                  bigint              not null,
     semester                    int                 not null,
 
-    constraint discipline_cource_profile_fk foreign key (profile_id) references profile (id),
-    constraint discipline_cource_discipline_fk foreign key (discipline_id) references discipline (id),
-    constraint discipline_cource_teacher_fk foreign key (teacher_id) references teacher (id),
+    constraint discipline_course_profile_fk foreign key (profile_id) references profile (id),
+    constraint discipline_course_discipline_fk foreign key (discipline_id) references discipline (id),
+    constraint discipline_course_teacher_fk foreign key (teacher_id) references teacher (id),
 
-    constraint discipline_cource_department_id_discipline_id_teacher_id_semester_combination unique (profile_id, discipline_id, teacher_id, semester)
+    constraint discipline_course_department_id_discipline_id_teacher_id_semester_combination unique (profile_id, discipline_id, teacher_id, semester)
 );
 
-comment on table discipline_cource is 'Курс дисциплины';
-comment on column discipline_cource.id is 'Идентификатор';
-comment on column discipline_cource.profile_id is 'Идентификатор профиля, в рамках которого прохожит курс';
-comment on column discipline_cource.discipline_id is 'Идентификатор дисциплины';
-comment on column discipline_cource.teacher_id is 'Идентификатор преподавателя';
-comment on column discipline_cource.semester is 'Семестр, на котором проходит курс';
+comment on table discipline_course is 'Курс дисциплины';
+comment on column discipline_course.id is 'Идентификатор';
+comment on column discipline_course.profile_id is 'Идентификатор профиля, в рамках которого прохожит курс';
+comment on column discipline_course.discipline_id is 'Идентификатор дисциплины';
+comment on column discipline_course.teacher_id is 'Идентификатор преподавателя';
+comment on column discipline_course.semester is 'Семестр, на котором проходит курс';
 
 create table if not exists indicator
 (
@@ -283,7 +283,7 @@ comment on column indicator.max_value is 'Максимально возможн�
 create table if not exists result
 (
     id                          bigserial           primary key,
-    discipline_cource_id        bigint              not null,
+    discipline_course_id        bigint              not null,
     indicator_id                bigint              not null,
     student_id                  bigint              not null,
     value                       double precision    not null,
@@ -291,7 +291,7 @@ create table if not exists result
     is_retake                   boolean             not null,
     is_prediction               boolean             not null,
 
-    constraint result_discipline_cource_fk foreign key (discipline_cource_id) references discipline_cource (id),
+    constraint result_discipline_course_fk foreign key (discipline_course_id) references discipline_course (id),
     constraint result_indicator_fk foreign key (indicator_id) references indicator (id),
     constraint result_student_fk foreign key (student_id) references student (id),
 
@@ -300,7 +300,7 @@ create table if not exists result
 
 comment on table result is 'Результат';
 comment on column result.id is 'Идентификатор';
-comment on column result.discipline_cource_id is 'Идентификатор';
+comment on column result.discipline_course_id is 'Идентификатор';
 comment on column result.indicator_id is 'Идентификатор';
 comment on column result.student_id is 'Идентификатор';
 comment on column result.value is 'Значение';

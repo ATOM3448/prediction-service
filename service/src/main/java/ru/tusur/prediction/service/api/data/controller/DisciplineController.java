@@ -2,6 +2,7 @@ package ru.tusur.prediction.service.api.data.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,6 @@ import ru.tusur.prediction.service.core.service.discipline.DisciplineService;
 import java.net.URI;
 
 import static ru.tusur.prediction.service.api.data.ApiPaths.DATA_API_DISCIPLINE;
-import static ru.tusur.prediction.service.api.data.ApiPaths.DATA_API_FACULTY;
 import static ru.tusur.prediction.service.api.data.ApiPaths.ID;
 import static ru.tusur.prediction.service.util.PageMapperUtils.mapToPage;
 
@@ -71,6 +71,7 @@ public class DisciplineController {
     @GetMapping(ID)
     @Operation(description = "Возвращает данные по дисциплине")
     @OkApiResponse
+    @NotFoundApiResponse
     @InternalErrorApiResponse
     @ReadAccess
     public DisciplineDto getDiscipline(@PathVariable long id) {
@@ -83,10 +84,10 @@ public class DisciplineController {
     @BadRequestApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public ResponseEntity<DisciplineDto> createDiscipline(@RequestBody UpdateDisciplineDto discipline) {
+    public ResponseEntity<DisciplineDto> createDiscipline(@Valid @RequestBody UpdateDisciplineDto discipline) {
         DisciplineDto created = disciplineToDisciplineDtoMapper.map(disciplineService.saveDiscipline(discipline));
 
-        return ResponseEntity.created(URI.create(DATA_API_FACULTY + "/" + created.id()))
+        return ResponseEntity.created(URI.create(DATA_API_DISCIPLINE + "/" + created.id()))
                 .body(created);
     }
 
@@ -97,11 +98,11 @@ public class DisciplineController {
     @NotFoundApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public void updateDiscipline(
+    public DisciplineDto updateDiscipline(
             @PathVariable long id,
-            @RequestBody UpdateDisciplineDto discipline
+            @Valid @RequestBody UpdateDisciplineDto discipline
     ) {
-        disciplineService.updateDiscipline(id, discipline);
+        return disciplineToDisciplineDtoMapper.map(disciplineService.updateDiscipline(id, discipline));
     }
     
 }

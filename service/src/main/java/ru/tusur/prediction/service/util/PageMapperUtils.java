@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.function.Function;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class PageMapperUtils {
+public final class PageMapperUtils {
+
     public static <S, D> PageDto<D> mapToPage(
             List<S> items,
             int page,

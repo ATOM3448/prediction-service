@@ -2,6 +2,7 @@ package ru.tusur.prediction.service.api.data.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -71,6 +72,7 @@ public class ProgramController {
     @GetMapping(ID)
     @Operation(description = "Возвращает данные по образовательной программе")
     @OkApiResponse
+    @NotFoundApiResponse
     @InternalErrorApiResponse
     @ReadAccess
     public ProgramDto getProgram(@PathVariable long id) {
@@ -83,7 +85,7 @@ public class ProgramController {
     @BadRequestApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public ResponseEntity<ProgramDto> createProgram(@RequestBody UpdateProgramDto program) {
+    public ResponseEntity<ProgramDto> createProgram(@Valid @RequestBody UpdateProgramDto program) {
         ProgramDto created = programToProgramDtoMapper.map(programService.saveProgram(program));
 
         return ResponseEntity.created(URI.create(DATA_API_FACULTY + "/" + created.id()))
@@ -97,11 +99,11 @@ public class ProgramController {
     @NotFoundApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public void updateProgram(
+    public ProgramDto updateProgram(
             @PathVariable long id,
-            @RequestBody UpdateProgramDto program
+            @Valid @RequestBody UpdateProgramDto program
     ) {
-        programService.updateProgram(id, program);
+        return programToProgramDtoMapper.map(programService.updateProgram(id, program));
     }
 
 }

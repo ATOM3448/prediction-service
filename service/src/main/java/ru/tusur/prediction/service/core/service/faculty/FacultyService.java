@@ -34,9 +34,7 @@ public class FacultyService {
     public Faculty getFaculty(long id) {
         Faculty faculty = facultyRepository.getFacultyById(id);
 
-        if ((faculty == null) || !validateAccessByOrganizationId(faculty.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfFaculty(faculty);
 
         return faculty;
     }
@@ -56,26 +54,28 @@ public class FacultyService {
         return savedFaculty;
     }
 
-    public void updateFaculty(long facultyId, UpdateFacultyDto newFaculty) {
+    public Faculty updateFaculty(long facultyId, UpdateFacultyDto newFaculty) {
         Faculty oldFaculty = facultyRepository.getFacultyById(facultyId);
 
-        if ((oldFaculty == null) || !validateAccessByOrganizationId(oldFaculty.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfFaculty(oldFaculty);
 
         String newName = newFaculty.name();
 
-        if (newName.equals(oldFaculty.name())) {
-            return;
-        }
-
-        facultyRepository.updateFaculty(facultyId, newName);
+        Faculty updatedFaculty = facultyRepository.updateFaculty(facultyId, newName);
 
         log.info(
                 "Данные по факультету #{} обновлены на \"{}\"",
                 facultyId,
                 newName
         );
+
+        return updatedFaculty;
+    }
+
+    private void checkExistenceOfFaculty(Faculty faculty) {
+        if ((faculty == null) || !validateAccessByOrganizationId(faculty.organizationId())) {
+            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
+        }
     }
 
 }

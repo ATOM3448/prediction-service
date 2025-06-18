@@ -3,7 +3,6 @@ package ru.tusur.prediction.service.core.repository;
 import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tusur.prediction.service.api.data.dto.indicator.IndicatorTypeDto;
 import ru.tusur.prediction.service.core.model.indicator.Indicator;
@@ -47,17 +46,18 @@ public interface IndicatorRepository {
             @Bind("maxValue") int maxValue
     );
 
-    @SqlUpdate(
+    @SqlQuery(
             """
             update indicator
             set id = :id,
                 type = :type,
                 name = :newName,
                 max_value = :maxValue
-            where id = :id;
+            where id = :id
+            returning *;
             """
     )
-    void updateIndicator(
+    Indicator updateIndicator(
             @Bind("id") long id,
             @Bind("type") IndicatorTypeDto type,
             @Bind("newName") String newName,

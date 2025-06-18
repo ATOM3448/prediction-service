@@ -12,7 +12,7 @@ import static ru.tusur.prediction.service.core.error.ErrorMessages.UNAUTHORIZED_
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
-public class SecurityUtils {
+public final class SecurityUtils {
 
     public static long getOrganizationIdFromSecurityContext() {
         return getPrincipal();

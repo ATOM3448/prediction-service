@@ -31,9 +31,7 @@ public class DisciplineService {
     public Discipline getDiscipline(long id) {
         Discipline discipline = disciplineRepository.getDisciplineById(id);
 
-        if ((discipline == null) || !validateAccessByOrganizationId(discipline.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfDiscipline(discipline);
 
         return discipline;
     }
@@ -53,25 +51,27 @@ public class DisciplineService {
         return savedDiscipline;
     }
 
-    public void updateDiscipline(long disciplineId, UpdateDisciplineDto newDiscipline) {
+    public Discipline updateDiscipline(long disciplineId, UpdateDisciplineDto newDiscipline) {
         Discipline oldDiscipline = disciplineRepository.getDisciplineById(disciplineId);
 
-        if ((oldDiscipline == null) || !validateAccessByOrganizationId(oldDiscipline.organizationId())) {
-            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
-        }
+        checkExistenceOfDiscipline(oldDiscipline);
 
         String newName = newDiscipline.name();
 
-        if (newName.equals(oldDiscipline.name())) {
-            return;
-        }
-
-        disciplineRepository.updateDiscipline(disciplineId, newName);
+        Discipline updatedDiscipline =  disciplineRepository.updateDiscipline(disciplineId, newName);
 
         log.info(
                 "Данные по дисциплине #{} обновлены на \"{}\"",
                 disciplineId,
                 newName
         );
+
+        return updatedDiscipline;
+    }
+
+    private void checkExistenceOfDiscipline(Discipline discipline) {
+        if ((discipline == null) || !validateAccessByOrganizationId(discipline.organizationId())) {
+            throw new ServiceException(ErrorCode.OBJECT_NOT_FOUND, OBJECT_NOT_FOUND_MESSAGE);
+        }
     }
 }

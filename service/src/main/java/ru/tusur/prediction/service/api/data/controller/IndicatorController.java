@@ -2,6 +2,7 @@ package ru.tusur.prediction.service.api.data.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -70,6 +71,7 @@ public class IndicatorController {
     @GetMapping(ID)
     @Operation(description = "Возвращает данные по индикатору")
     @OkApiResponse
+    @NotFoundApiResponse
     @InternalErrorApiResponse
     @ReadAccess
     public IndicatorDto getIndicator(@PathVariable long id) {
@@ -82,7 +84,7 @@ public class IndicatorController {
     @BadRequestApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public ResponseEntity<IndicatorDto> createIndicator(@RequestBody UpdateIndicatorDto indicator) {
+    public ResponseEntity<IndicatorDto> createIndicator(@Valid @RequestBody UpdateIndicatorDto indicator) {
         IndicatorDto created = indicatorToIndicatorDtoMapper.map(indicatorService.saveIndicator(indicator));
 
         return ResponseEntity.created(URI.create(DATA_API_INDICATOR + "/" + created.id()))
@@ -98,7 +100,7 @@ public class IndicatorController {
     @WriteAccess
     public void updateIndicator(
             @PathVariable long id,
-            @RequestBody UpdateIndicatorDto indicator
+            @Valid @RequestBody UpdateIndicatorDto indicator
     ) {
         indicatorService.updateIndicator(id, indicator);
     }

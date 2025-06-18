@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.net.URI;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -71,6 +72,7 @@ public class FacultyController {
     @GetMapping(ID)
     @Operation(description = "Возвращает данные по факультету")
     @OkApiResponse
+    @NotFoundApiResponse
     @InternalErrorApiResponse
     @ReadAccess
     public FacultyDto getFaculty(@PathVariable long id) {
@@ -83,7 +85,7 @@ public class FacultyController {
     @BadRequestApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public ResponseEntity<FacultyDto> createFaculty(@RequestBody UpdateFacultyDto faculty) {
+    public ResponseEntity<FacultyDto> createFaculty(@Valid @RequestBody UpdateFacultyDto faculty) {
         FacultyDto created = facultyToFacultyDtoMapper.map(facultyService.saveFaculty(faculty));
 
         return ResponseEntity.created(URI.create(DATA_API_FACULTY + "/" + created.id()))
@@ -97,10 +99,10 @@ public class FacultyController {
     @NotFoundApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public void updateFaculty(
+    public FacultyDto updateFaculty(
             @PathVariable long id,
-            @RequestBody UpdateFacultyDto faculty
+            @Valid @RequestBody UpdateFacultyDto faculty
     ) {
-        facultyService.updateFaculty(id, faculty);
+        return facultyToFacultyDtoMapper.map(facultyService.updateFaculty(id, faculty));
     }
 }

@@ -3,7 +3,6 @@ package ru.tusur.prediction.service.core.repository;
 import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tusur.prediction.service.core.model.program.Program;
 
@@ -45,15 +44,16 @@ public interface ProgramRepository {
             @Bind("name") String name
     );
 
-    @SqlUpdate(
+    @SqlQuery(
             """
             update program
             set code = :code,
             name = :name
-            where id = :id;
+            where id = :id
+            returning *;
             """
     )
-    void updateProgram(
+    Program updateProgram(
             @Bind("id") long programId,
             @Bind("code") String code,
             @Bind("name") String name
