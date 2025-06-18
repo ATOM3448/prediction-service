@@ -1,0 +1,52 @@
+{
+  "id": "ovyp6bwy78d",
+  "v": 1,
+  "name": "prediction-service-localhost",
+  "variables": [
+    {
+      "key": "host",
+      "value": "http://localhost:8080",
+      "secret": false
+    },
+    {
+      "key": "data-api",
+      "value": "/data-api",
+      "secret": false
+    },
+    {
+      "key": "prediction-api",
+      "value": "/prediction-api",
+      "secret": false
+    },
+    {
+      "key": "api-key-prefix",
+      "value": "TUSURTUS",
+      "secret": false
+    },
+    {
+      "key": "master-api-key",
+      "value": "176dffaa52aea2e5ade6dc28adf8b6c18d6ecbaf1119fa2c15f5f34fab5bf53a",
+      "secret": false
+    },
+    {
+      "key": "read-api-key",
+      "value": "98f019fddcdb4b97ba2b26a6ce1394d060c5a466635a498320d3705b3aa591af",
+      "secret": false
+    },
+    {
+      "key": "write-api-key",
+      "value": "1cf08a5c53e0c839c9d4272d6bd02fe85a8a9e90c158cbfc3284df233b1afe5e",
+      "secret": false
+    },
+    {
+      "key": "prediction-api-key",
+      "value": "5de60b8fd38f81eaf572cfd5d6bf0e54333888ceef7e2a53a9b6a5890fb74aba",
+      "secret": false
+    },
+    {
+      "key": "api-key-header",
+      "value": "Authorization",
+      "secret": false
+    }
+  ]
+}

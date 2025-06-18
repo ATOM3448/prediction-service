@@ -1,0 +1,1244 @@
+{
+  "v": 6,
+  "name": "prediction-service",
+  "folders": [
+    {
+      "v": 6,
+      "name": "data",
+      "folders": [
+        {
+          "v": 6,
+          "name": "faculty",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о факультетах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/faculty",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить факультет",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/faculty/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Сохранить данные по факультету",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/faculty",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"ФВС\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обновить данные по факультету",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/faculty/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"ФСУ\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "_ref_id": "coll_mbi4pfkb_241bac04-0c3f-4216-be1b-6167f8b585d0"
+        },
+        {
+          "v": 6,
+          "name": "student",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Добавить студента",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/student",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить информацию о студентах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/student?page=0&size=20",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "_ref_id": "coll_mbxvy82g_7a2c7d56-09af-4c60-948c-3f7ad63f5bcf"
+        },
+        {
+          "v": 6,
+          "name": "indicator",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о индикаторах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/indicator",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить индикатор",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/indicator/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Добавить индикатор",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/indicator",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"type\": \"ATTENDANCE_LECTURE_SECOND_PERIOD\",\n  \"name\": \"Посещаемость лекций за второй период\",\n  \"maxValue\": \"1\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обоновить информацию по индикатору",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/indicator/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"type\": \"ATTENDANCE_LECTURE_SECOND_PERIOD\",\n  \"name\": \"Посещаемость лекций за первый период\",\n  \"maxValue\": \"2\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authActive": true,
+            "authType": "inherit"
+          },
+          "headers": [],
+          "_ref_id": "coll_mbxz65gx_951d383f-7fe1-4314-b3c8-83bea4ab49d8"
+        },
+        {
+          "v": 6,
+          "name": "program",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о образовательных программах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить образовательную программу",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Добавить образовательную программу",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/program",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"code\": \"09.03.01\",\n  \"name\": \"Информатика и вычислительная техника\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обоновить информацию по образовательной программе",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/program/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"code\": \"09.03.02\",\n  \"name\": \"Все ещё не знаю...\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authActive": true,
+            "authType": "inherit"
+          },
+          "headers": [],
+          "_ref_id": "coll_mby5h147_102fa1a0-e7fa-408e-926d-f92c6e3a09b5"
+        },
+        {
+          "v": 6,
+          "name": "discipline",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о дисциплинах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/discipline",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить дисциплину",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/discipline/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Добавить дисциплину",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/discipline",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"Физика\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обоновить информацию по дисциплине",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/discipline/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"Математика\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authActive": true,
+            "authType": "inherit"
+          },
+          "headers": [],
+          "_ref_id": "coll_mby6b92z_d238ccb8-afbe-4bfc-9464-0e83c22ac3b2"
+        },
+        {
+          "v": 6,
+          "name": "department",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о кафедрах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/faculty/1/department",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить кафедру",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/faculty/1/department/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Сохранить данные по кафедре",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/faculty/1/department",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"АОИ\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обновить данные по кафедре",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/faculty/1/department/3",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"Не знаю..\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "_ref_id": "coll_mc0bn3mj_e2d8bd05-1a5c-42bf-b93f-f96d0d608aba"
+        },
+        {
+          "v": 6,
+          "name": "teacher",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Добавить преподавателя",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/faculty/1/department/1/teacher",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить информацию о преподавателях",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/faculty/1/department/1/teacher?page=0&size=20",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "_ref_id": "coll_mc0d4x5v_50de6f50-3e19-4910-81ca-5de6d20f6f3d"
+        },
+        {
+          "v": 6,
+          "name": "profile",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о профилях",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить профиль",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Сохранить данные по профилю",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/program/1/profile",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"departmentId\": 1,\n  \"name\": \"Программное 2fdgd...\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обновить данные по профилю",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/2",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"АнтиАнтиПрограммное обеспечение\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authActive": true,
+            "authType": "inherit"
+          },
+          "headers": [],
+          "_ref_id": "coll_mc0dfsj6_04f91e52-4fde-4c74-a30e-6191a15b0074"
+        },
+        {
+          "v": 6,
+          "name": "student-group",
+          "folders": [
+            {
+              "v": 6,
+              "name": "member",
+              "folders": [],
+              "requests": [
+                {
+                  "v": "11",
+                  "name": "Получить информацию о членах группы",
+                  "method": "GET",
+                  "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group/3/member",
+                  "params": [],
+                  "headers": [],
+                  "preRequestScript": "",
+                  "testScript": "",
+                  "auth": {
+                    "authType": "api-key",
+                    "key": "<<api-key-header>>",
+                    "value": "<<api-key-prefix>>.<<read-api-key>>",
+                    "addTo": "HEADERS",
+                    "authActive": true
+                  },
+                  "body": {
+                    "contentType": null,
+                    "body": null
+                  },
+                  "requestVariables": [],
+                  "responses": {}
+                },
+                {
+                  "v": "11",
+                  "name": "Получить члена группы",
+                  "method": "GET",
+                  "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group/3/member/1",
+                  "params": [],
+                  "headers": [],
+                  "preRequestScript": "",
+                  "testScript": "",
+                  "auth": {
+                    "authType": "api-key",
+                    "key": "<<api-key-header>>",
+                    "value": "<<api-key-prefix>>.<<read-api-key>>",
+                    "addTo": "HEADERS",
+                    "authActive": true
+                  },
+                  "body": {
+                    "contentType": null,
+                    "body": null
+                  },
+                  "requestVariables": [],
+                  "responses": {}
+                },
+                {
+                  "v": "11",
+                  "name": "Сохранить данные по члену группы",
+                  "method": "POST",
+                  "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group/3/member",
+                  "params": [],
+                  "headers": [],
+                  "preRequestScript": "",
+                  "testScript": "",
+                  "auth": {
+                    "authType": "api-key",
+                    "key": "<<api-key-header>>",
+                    "value": "<<api-key-prefix>>.<<write-api-key>>",
+                    "addTo": "HEADERS",
+                    "authActive": true
+                  },
+                  "body": {
+                    "contentType": "application/json",
+                    "body": "{\n  \"studentId\": 1,\n  \"enrollment\": \"2025-01-01\"\n}"
+                  },
+                  "requestVariables": [],
+                  "responses": {}
+                },
+                {
+                  "v": "11",
+                  "name": "Обновить данные по члену группы",
+                  "method": "PUT",
+                  "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group/3/member/1",
+                  "params": [],
+                  "headers": [],
+                  "preRequestScript": "",
+                  "testScript": "",
+                  "auth": {
+                    "authType": "api-key",
+                    "key": "<<api-key-header>>",
+                    "value": "<<api-key-prefix>>.<<write-api-key>>",
+                    "addTo": "HEADERS",
+                    "authActive": true
+                  },
+                  "body": {
+                    "contentType": "application/json",
+                    "body": "{\n  \"studentId\": 1,\n  \"enrollment\": \"2025-01-01\",\n  \"expulsion\": \"2025-01-02\"\n}"
+                  },
+                  "requestVariables": [],
+                  "responses": {}
+                }
+              ],
+              "auth": {
+                "authActive": true,
+                "authType": "inherit"
+              },
+              "headers": [],
+              "_ref_id": "coll_mc1x310w_0d7904f5-403e-47af-9ef1-aa6fecdb37df"
+            }
+          ],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о студенческих группах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить студенческую группу",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group/3",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Сохранить данные по студенческой группе",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"profileId\": 1,\n  \"name\": \"431-3\",\n  \"generalEnrollment\": \"2025-01-01\",\n  \"planedExpulsion\": \"2026-01-01\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обновить данные по студенческой группе",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/student-group/3",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"name\": \"431-4\",\n  \"generalEnrollment\": \"2025-01-01\",\n  \"planedExpulsion\": \"2026-01-01\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "_ref_id": "coll_mc0dfx1t_27db2101-3469-4143-bb5c-71b761603c07"
+        },
+        {
+          "v": 6,
+          "name": "discipline-course",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о курсах дисциплин",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/discipline-course",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить курс дисциплины",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/discipline-course/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Сохранить данные по курсу дисциплины",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/discipline-course",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"disciplineId\": 1,\n  \"teacherId\": 3,\n  \"semester\": 2\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authActive": true,
+            "authType": "inherit"
+          },
+          "headers": [],
+          "_ref_id": "coll_mc0dg3z5_ca52635b-6447-4b1d-ab14-42dde6389b02"
+        },
+        {
+          "v": 6,
+          "name": "result",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Получить информацию о результатах",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/discipline-course/1/result?value.value=2.0&value.type=INCLUDE_GREATER_THAN",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Получить результат",
+              "method": "GET",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/discipline-course/1/result/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<read-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Сохранить данные по результату",
+              "method": "POST",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/discipline-course/1/result",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"indicatorId\": 1,\n  \"studentId\": 2,\n  \"value\": 3,\n  \"date\": \"2025-06-17\",\n  \"isRetake\": true\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Обновить данные по результату",
+              "method": "PUT",
+              "endpoint": "<<host>><<data-api>>/program/1/profile/1/discipline-course/1/result/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<write-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"indicatorId\": 1,\n  \"studentId\": 2,\n  \"value\": 6,\n  \"date\": \"2025-06-17\",\n  \"isRetake\": true\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "_ref_id": "coll_mc0dgaeb_3d13d632-3274-4b4d-ac72-77e33587afd6"
+        }
+      ],
+      "requests": [],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_mbi4kx5w_24ecefd5-1183-4939-bab2-01d6e91bfa7a"
+    },
+    {
+      "v": 6,
+      "name": "prediction",
+      "folders": [
+        {
+          "v": 6,
+          "name": "student",
+          "folders": [],
+          "requests": [
+            {
+              "v": "11",
+              "name": "Запрос предсказания на закрытие сессии",
+              "method": "POST",
+              "endpoint": "<<host>><<prediction-api>>/student",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<prediction-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"semesters\": [\n    {\n      \"disciplines\": [\n        {\n          \"resultSession\": 0,\n          \"resultControlPointFirst\": 0,\n          \"resultControlPointSecond\": 0,\n          \"attendanceLectureFirstPeriod\": 0,\n          \"attendanceLectureSecondPeriod\": 0,\n          \"attendanceLectureThirdPeriod\": 0,\n          \"attendancePracticeFirstPeriod\": 0,\n          \"attendancePracticeSecondPeriod\": 0,\n          \"attendancePracticeThirdPeriod\": 0\n        }\n      ]\n    }\n  ]\n}"
+              },
+              "requestVariables": [],
+              "responses": {}
+            },
+            {
+              "v": "11",
+              "name": "Запрос предсказания на закрытие сессии по id студента",
+              "method": "GET",
+              "endpoint": "<<host>><<prediction-api>>/student/1",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "",
+              "auth": {
+                "authType": "api-key",
+                "key": "<<api-key-header>>",
+                "value": "<<api-key-prefix>>.<<prediction-api-key>>",
+                "addTo": "HEADERS",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {}
+            }
+          ],
+          "auth": {
+            "authActive": true,
+            "authType": "inherit"
+          },
+          "headers": [],
+          "_ref_id": "coll_mc216yvt_54f1322c-ab34-458b-8a06-1ac83c470b97"
+        }
+      ],
+      "requests": [],
+      "auth": {
+        "authActive": true,
+        "authType": "inherit"
+      },
+      "headers": [],
+      "_ref_id": "coll_mbi4l6wf_5765dce2-b198-4834-aa8e-8e5b52f5d44d"
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [],
+  "_ref_id": "coll_mbi4ktyi_785e9864-1e46-4391-a71d-e74bb8c10ed6"
+}
