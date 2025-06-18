@@ -5,7 +5,6 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tusur.prediction.service.core.model.discipline.Discipline;
-import ru.tusur.prediction.service.core.model.discipline.Discipline;
 
 import java.util.List;
 

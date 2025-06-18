@@ -60,7 +60,7 @@ public class IndicatorService {
     }
 
 
-    public void updateIndicator(long indicatorId, UpdateIndicatorDto newIndicator) {
+    public Indicator updateIndicator(long indicatorId, UpdateIndicatorDto newIndicator) {
         Indicator oldIndicator = indicatorRepository.getIndicatorById(indicatorId);
 
         checkExistenceOfIndicator(oldIndicator);
@@ -69,13 +69,15 @@ public class IndicatorService {
         String name = newIndicator.name();
         int maxValue = newIndicator.maxValue();
 
-        indicatorRepository.updateIndicator(indicatorId, type, name, maxValue);
+        Indicator savedIndicator = indicatorRepository.updateIndicator(indicatorId, type, name, maxValue);
 
         log.info(
                 "Данные по индикатору #{} обновлены на \"{}\"",
                 indicatorId,
                 name
         );
+
+        return savedIndicator;
     }
 
     private void checkExistenceOfIndicator(Indicator indicator) {

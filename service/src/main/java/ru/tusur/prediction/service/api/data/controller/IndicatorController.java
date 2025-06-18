@@ -98,11 +98,11 @@ public class IndicatorController {
     @NotFoundApiResponse
     @InternalErrorApiResponse
     @WriteAccess
-    public void updateIndicator(
+    public IndicatorDto updateIndicator(
             @PathVariable long id,
             @Valid @RequestBody UpdateIndicatorDto indicator
     ) {
-        indicatorService.updateIndicator(id, indicator);
+        return indicatorToIndicatorDtoMapper.map(indicatorService.updateIndicator(id, indicator));
     }
 
 }
