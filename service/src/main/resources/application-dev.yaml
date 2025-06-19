@@ -8,6 +8,15 @@ springdoc:
     path: swagger-ui.html
 # Команда для сохранения доки: curl -o openapi.yaml http://localhost:8080/v3/api-docs.yaml
 
+server:
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:keystore.p12
+    key-store-password: keystore
+    key-alias: myapp
+  port: 8443
+
 spring:
   security:
     user:
